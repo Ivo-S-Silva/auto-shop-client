@@ -6,7 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [username, setUsername] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
@@ -14,7 +13,7 @@ function SignupPage() {
 const handleSignupSubmit = (e) => {
     e.preventDefault();
 
-    const requestBody = {email, username, password};
+    const requestBody = {email, password};
 
     axios.post(`${process.env.REACT_APP_API_URL}/auth/signup`, requestBody)
         .then(response => navigate('/login'))

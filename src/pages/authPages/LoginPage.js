@@ -7,7 +7,6 @@ import { Col, Container, Form, Row, Button } from "react-bootstrap";
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ function LoginPage() {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
 
-    const requestBody = { email, username, password };
+    const requestBody = { email, password };
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, requestBody)
