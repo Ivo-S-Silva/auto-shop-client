@@ -1,23 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
+import { Link, NavLink, Route, Routes } from 'react-router-dom';
+import IsPrivate from './Components/isPrivate';
+import LandingPage from './pages/LandingPage';
+import SignupPage from './pages/authPages/SignupPage';
+import LoginPage from './pages/authPages/LoginPage';
+import { useContext } from 'react';
+import { AuthContext } from './context/auth.context';
+
 
 function App() {
+
+  const {isLoggedIn, isLoading, user, logOutUser} = useContext(AuthContext);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Routes>
+      <Route path='/' element={!isLoggedIn ? <LoginPage/> : <LandingPage/>}></Route>
+
+      <Route path='/signup' element={<SignupPage/>}></Route>
+      <Route path='/login' element={<LoginPage/>}></Route>
+    </Routes>
     </div>
   );
 }
