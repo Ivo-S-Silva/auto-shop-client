@@ -8,18 +8,22 @@ import LoginPage from './pages/authPages/LoginPage';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './context/auth.context';
 import axios from 'axios';
+import AddClientPage from './pages/clientPages/AddClientPage';
+import EditClientPage from './pages/clientPages/EditClientPage';
+import ClientListPage from './pages/clientPages/ClientListPage';
+import ClientDetailsPage from './pages/clientPages/ClientDetailsPage';
+import NavbarComponent from './Components/NavbarComponent';
 
 
 function App() {
 
-  const {isLoggedIn} = useContext(AuthContext);
-
   const [clients, setClients] = useState([]);
+
+  const {user} = useContext(AuthContext);
 
   // Retrieving the token from local storage to be able to send it in the headers
   // of the query to the database with axios
   
-
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
 
@@ -32,8 +36,13 @@ function App() {
 
   return (
     <div className="App">
+    <IsPrivate><NavbarComponent/></IsPrivate>
     <Routes>
-      <Route path='/' element={!isLoggedIn ? <LoginPage/> : <LandingPage clients={clients}/>}></Route>
+      <Route path='/' element={<IsPrivate><LandingPage clients={clients}/></IsPrivate>}></Route>
+      <Route path='/clients' element={<IsPrivate><ClientListPage clients={clients}/></IsPrivate>}></Route>
+      <Route path='/clients/create' element={<IsPrivate><AddClientPage/></IsPrivate>}></Route>
+      <Route path='/clients/:clientId' element={<IsPrivate><ClientDetailsPage/></IsPrivate>}></Route>
+      <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage/></IsPrivate>}></Route>
       <Route path='/signup' element={<SignupPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
     </Routes>

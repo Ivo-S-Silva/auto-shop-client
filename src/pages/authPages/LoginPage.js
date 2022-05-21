@@ -21,9 +21,9 @@ function LoginPage() {
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, requestBody)
       .then((response) => {
-        storeToken(response.data.authToken);
-        authenticateUser();
-        navigate("/");
+        storeToken(response.data.authToken)
+        authenticateUser()
+        navigate('/')
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
