@@ -20,7 +20,7 @@ function ClientListPage(props) {
       return props.clients.map(client => {
         return(
             <tr>
-                <td>{client.name}</td>
+                <td><Link to={`/clients/${client._id}`} >{client.name}</Link></td>
                 <td>{client.cars.length}</td>
                 <td>{numberOfServices(client.cars)}</td>
             </tr>

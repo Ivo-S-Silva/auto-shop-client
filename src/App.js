@@ -48,7 +48,7 @@ function App() {
       <Route path='/clients' element={<IsPrivate><ClientListPage clients={clients}/></IsPrivate>}></Route>
       <Route path='/clients/create' element={<IsPrivate><AddClientPage callbackGetClientList={getClientList}/></IsPrivate>}></Route>
       <Route path='/clients/:clientId' element={<IsPrivate><ClientDetailsPage/></IsPrivate>}></Route>
-      <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage callbackGetClientList={getClientList}/></IsPrivate>}></Route>
+      <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage clients={clients} callbackGetClientList={getClientList}/></IsPrivate>}></Route>
       <Route path='/signup' element={<SignupPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
     </Routes>
