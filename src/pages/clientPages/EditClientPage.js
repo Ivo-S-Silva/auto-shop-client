@@ -35,12 +35,12 @@ function EditClientPage(props) {
 
   return (
     <Form onSubmit={handleSubmit}>
-  <Form.Group className="mb-3" controlId="formBasicEmail">
+  <Form.Group className="mb-3" controlId="formBasicName">
     <Form.Label>Name:</Form.Label>
     <Form.Control required={true} type="text" name='name' value={name} onChange={e => {setName(e.target.value)}}/>
   </Form.Group>
 
-  <Form.Group className="mb-3" controlId="formBasicPassword">
+  <Form.Group className="mb-3" controlId="formBasicFiscalNumber">
     <Form.Label>Fiscal Number</Form.Label>
     <Form.Control required={true} name='fiscalNumber' value={fiscalNumber} type="Number" onChange={e => {setFiscalNumber(e.target.value)}} />
   </Form.Group>

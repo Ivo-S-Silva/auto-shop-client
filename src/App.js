@@ -14,11 +14,15 @@ import ClientListPage from './pages/clientPages/ClientListPage';
 import ClientDetailsPage from './pages/clientPages/ClientDetailsPage';
 import NavbarComponent from './Components/NavbarComponent';
 import CarListPage from './pages/carPages/CarListPage';
+import AddCarPage from './pages/carPages/AddCarPage';
+import EditCarPage from './pages/carPages/EditCarPage';
+import CarDetailsPage from './pages/carPages/CarDetailsPage';
 
 
 function App() {
 
   const [clients, setClients] = useState([]);
+  const [currentCar, setCurrentCar] = useState(null);
 
   const {user} = useContext(AuthContext);
 
@@ -39,6 +43,9 @@ function App() {
     .catch(error => console.log("There was an error getting the client list from the API", error))
   }
 
+  const getCurrentCar = (car) => {
+    setCurrentCar(car);
+  }
 
 
   return (
@@ -50,7 +57,11 @@ function App() {
       <Route path='/clients/create' element={<IsPrivate><AddClientPage callbackGetClientList={getClientList}/></IsPrivate>}></Route>
       <Route path='/clients/:clientId' element={<IsPrivate><ClientDetailsPage/></IsPrivate>}></Route>
       <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage clients={clients} callbackGetClientList={getClientList}/></IsPrivate>}></Route>
+      <Route path='/clients/:clientId/cars/new' element={<IsPrivate><AddCarPage/></IsPrivate>}></Route>
       <Route path='/cars' element={<IsPrivate><CarListPage/></IsPrivate>}></Route>
+      <Route path='/cars/:carId' element={<IsPrivate><CarDetailsPage getCurrentCar={getCurrentCar}/></IsPrivate>}></Route>
+      
+      <Route path='/cars/:carId/edit' element={<IsPrivate><EditCarPage currentCar={currentCar}/></IsPrivate>}></Route>
       <Route path='/signup' element={<SignupPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
     </Routes>

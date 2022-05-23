@@ -1,4 +1,5 @@
 import axios, { Axios } from "axios";
+import { Button } from "bootstrap";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -32,8 +33,9 @@ function CarListPage() {
                 {cars.map(car => {
                     return (
                     <>
-                        <h1>{car.brand}, {car.model}</h1>
-                        <Link to={`/clients/${car.owner}`}>{car.licensePlate}</Link>
+                        <h1>{car.brand}, {car.model}, {car.licensePlate}</h1>
+                        <Link to={`/clients/${car.owner}`}>Go to Owner Page</Link>
+                        <Link to={`/cars/${car._id}`}>Go to Car details Page</Link>
                     </>)
                 })}
             </>

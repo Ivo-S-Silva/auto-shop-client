@@ -27,7 +27,7 @@ function AddClientPage(props) {
 
         setName('');
         setFiscalNumber(null);
-        navigate(`/clients/${response.data._id}`);
+        navigate(`/clients/`);
       })
       .catch(error => console.log('There was an error creating new client', error));
   }
