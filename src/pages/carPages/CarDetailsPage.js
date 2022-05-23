@@ -28,20 +28,6 @@ useEffect(() => {
         .catch(error => console.log('There was an error getting the car details.', error))
 }, [])
 
-
-const renderListOfServices = () => {
-    car.services ? car.services.map(service => {
-        return(
-            <>
-            <h2>Service Date: {service.serviceDate}</h2>
-            <h2>Service Date: {service.serviceDetails}</h2>
-            <h2>Service Date: {service.serviceStatus}</h2>
-            </>
-    )
-}
-) :  <h1>There are no services currently scheduled for this car.</h1>
-}
-
   return (
     <>
         <h1>Brand: {car.brand}</h1>
@@ -49,7 +35,16 @@ const renderListOfServices = () => {
         <h3>License Plate: {car.licensePlate}</h3>
         <Link to={`/cars/${car._id}/edit`}>Edit Car Information</Link>
 
-        {renderListOfServices()}
+        {services ? services.map(service => {
+        return(
+            <>
+            <h2>Service Date: {service.serviceDate.substr(0, service.serviceDate.indexOf('T'))}</h2>
+            <h2>Service Date: {service.serviceDetails}</h2>
+            <h2>Service Date: {service.serviceStatus}</h2>
+            </>
+    )
+}
+) : <h1>There are currently no services scheduled for this vehicle.</h1>}
     </>
   )
 }

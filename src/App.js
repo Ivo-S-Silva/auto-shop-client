@@ -17,6 +17,7 @@ import CarListPage from './pages/carPages/CarListPage';
 import AddCarPage from './pages/carPages/AddCarPage';
 import EditCarPage from './pages/carPages/EditCarPage';
 import CarDetailsPage from './pages/carPages/CarDetailsPage';
+import ServiceListPage from './pages/servicePages/ServiceListPage';
 
 
 function App() {
@@ -60,8 +61,9 @@ function App() {
       <Route path='/clients/:clientId/cars/new' element={<IsPrivate><AddCarPage/></IsPrivate>}></Route>
       <Route path='/cars' element={<IsPrivate><CarListPage/></IsPrivate>}></Route>
       <Route path='/cars/:carId' element={<IsPrivate><CarDetailsPage getCurrentCar={getCurrentCar}/></IsPrivate>}></Route>
-      
       <Route path='/cars/:carId/edit' element={<IsPrivate><EditCarPage currentCar={currentCar}/></IsPrivate>}></Route>
+
+      <Route path='/services' element={<IsPrivate><ServiceListPage/></IsPrivate>}></Route>
       <Route path='/signup' element={<SignupPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
     </Routes>
