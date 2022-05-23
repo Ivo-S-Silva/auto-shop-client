@@ -23,16 +23,22 @@ function App() {
 
   // Retrieving the token from local storage to be able to send it in the headers
   // of the query to the database with axios
-  
-  useEffect(() => {
-    const storedToken = localStorage.getItem('authToken');
+  const storedToken = localStorage.getItem('authToken');
 
+
+  useEffect(() => {
+    getClientList();
+  }, [])
+
+  const getClientList = () => {
     axios.get(`${process.env.REACT_APP_API_URL}/clients`, {headers: {Authorization: `Bearer ${storedToken}`}})
-      .then(response => {
-        setClients(response.data);
-      })
-      .catch(error => console.log("There was an error getting the client list from the API", error))
-  }, [clients])
+    .then(response => {
+      setClients(response.data);
+    })
+    .catch(error => console.log("There was an error getting the client list from the API", error))
+  }
+
+
 
   return (
     <div className="App">
@@ -40,9 +46,9 @@ function App() {
     <Routes>
       <Route path='/' element={<IsPrivate><LandingPage clients={clients}/></IsPrivate>}></Route>
       <Route path='/clients' element={<IsPrivate><ClientListPage clients={clients}/></IsPrivate>}></Route>
-      <Route path='/clients/create' element={<IsPrivate><AddClientPage/></IsPrivate>}></Route>
+      <Route path='/clients/create' element={<IsPrivate><AddClientPage callbackGetClientList={getClientList}/></IsPrivate>}></Route>
       <Route path='/clients/:clientId' element={<IsPrivate><ClientDetailsPage/></IsPrivate>}></Route>
-      <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage/></IsPrivate>}></Route>
+      <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage callbackGetClientList={getClientList}/></IsPrivate>}></Route>
       <Route path='/signup' element={<SignupPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
     </Routes>
