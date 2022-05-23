@@ -13,6 +13,7 @@ import EditClientPage from './pages/clientPages/EditClientPage';
 import ClientListPage from './pages/clientPages/ClientListPage';
 import ClientDetailsPage from './pages/clientPages/ClientDetailsPage';
 import NavbarComponent from './Components/NavbarComponent';
+import CarListPage from './pages/carPages/CarListPage';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
       <Route path='/clients/create' element={<IsPrivate><AddClientPage callbackGetClientList={getClientList}/></IsPrivate>}></Route>
       <Route path='/clients/:clientId' element={<IsPrivate><ClientDetailsPage/></IsPrivate>}></Route>
       <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage clients={clients} callbackGetClientList={getClientList}/></IsPrivate>}></Route>
+      <Route path='/cars' element={<IsPrivate><CarListPage/></IsPrivate>}></Route>
       <Route path='/signup' element={<SignupPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
     </Routes>

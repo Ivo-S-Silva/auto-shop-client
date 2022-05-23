@@ -9,6 +9,8 @@ function ClientDetailsPage() {
 
   const storedToken = localStorage.getItem('authToken');
 
+  console.log(storedToken)
+
   useEffect(() => {
     axios
     .get(`${process.env.REACT_APP_API_URL}/clients/${clientId}`, {
