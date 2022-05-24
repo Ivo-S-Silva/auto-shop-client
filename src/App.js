@@ -31,17 +31,17 @@ function App() {
   const storedToken = localStorage.getItem('authToken');
 
 
-  useEffect(() => {
-    getClientList();
-  }, [])
+  // useEffect(() => {
+  //   getClientList();
+  // }, [])
 
-  const getClientList = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/clients`, {headers: {Authorization: `Bearer ${storedToken}`}})
-    .then(response => {
-      setClients(response.data);
-    })
-    .catch(error => console.log("There was an error getting the client list from the API", error))
-  }
+  // const getClientList = () => {
+  //   axios.get(`${process.env.REACT_APP_API_URL}/clients`, {headers: {Authorization: `Bearer ${storedToken}`}})
+  //   .then(response => {
+  //     setClients(response.data);
+  //   })
+  //   .catch(error => console.log("There was an error getting the client list from the API", error))
+  // }
 
   const getCurrentCar = (car) => {
     setCurrentCar(car);
@@ -55,9 +55,9 @@ function App() {
     <Routes>
       <Route path='/' element={<IsPrivate><LandingPage clients={clients}/></IsPrivate>}></Route>
       <Route path='/clients' element={<IsPrivate><ClientListPage clients={clients}/></IsPrivate>}></Route>
-      <Route path='/clients/create' element={<IsPrivate><AddClientPage callbackGetClientList={getClientList}/></IsPrivate>}></Route>
+      <Route path='/clients/create' element={<IsPrivate><AddClientPage /></IsPrivate>}></Route>
       <Route path='/clients/:clientId' element={<IsPrivate><ClientDetailsPage/></IsPrivate>}></Route>
-      <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage clients={clients} callbackGetClientList={getClientList}/></IsPrivate>}></Route>
+      <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage clients={clients}/></IsPrivate>}></Route>
       <Route path='/clients/:clientId/cars/new' element={<IsPrivate><AddCarPage/></IsPrivate>}></Route>
       <Route path='/cars' element={<IsPrivate><CarListPage/></IsPrivate>}></Route>
       <Route path='/cars/:carId' element={<IsPrivate><CarDetailsPage getCurrentCar={getCurrentCar}/></IsPrivate>}></Route>
