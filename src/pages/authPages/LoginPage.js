@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {Navigate, Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
 
@@ -55,7 +55,7 @@ function LoginPage() {
               <Form.Control style={{ width: "20vw"}} type="password" name="password" value={password} required={true} onChange={e => setPassword(e.target.value)} placeholder="Password" />
             </Form.Group>
             <Button variant="primary" type="submit">Submit</Button>
-            <p className="mt-4">Need an account? <Link to={"/signup"}>Sign Up</Link></p>
+            <p className="mt-4">Need an account? <Navigate to={"/signup"}>Sign Up</Navigate></p>
           </Form>
 
         </Col>

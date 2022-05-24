@@ -51,7 +51,7 @@ function App() {
   return (
     <div className="App">
     <IsPrivate><NavbarComponent/></IsPrivate>
-    
+
     <Routes>
       <Route path='/' element={<IsPrivate><LandingPage clients={clients}/></IsPrivate>}></Route>
       <Route path='/clients' element={<IsPrivate><ClientListPage clients={clients}/></IsPrivate>}></Route>
@@ -64,6 +64,8 @@ function App() {
       <Route path='/cars/:carId/edit' element={<IsPrivate><EditCarPage currentCar={currentCar}/></IsPrivate>}></Route>
 
       <Route path='/services' element={<IsPrivate><ServiceListPage/></IsPrivate>}></Route>
+      
+      
       <Route path='/signup' element={<SignupPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
     </Routes>
