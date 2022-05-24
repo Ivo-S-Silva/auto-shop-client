@@ -17,6 +17,7 @@ import AddCarPage from './pages/carPages/AddCarPage';
 import EditCarPage from './pages/carPages/EditCarPage';
 import CarDetailsPage from './pages/carPages/CarDetailsPage';
 import ServiceListPage from './pages/servicePages/ServiceListPage';
+import HomePage from './pages/HomePage';
 
 
 function App() {
@@ -24,41 +25,31 @@ function App() {
   const [clients, setClients] = useState([]);
   const [currentCar, setCurrentCar] = useState(null);
 
-  const {user} = useContext(AuthContext);
-
-  // Retrieving the token from local storage to be able to send it in the headers
-  // of the query to the database with axios
-  const storedToken = localStorage.getItem('authToken');
-
-
-  // useEffect(() => {
-  //   getClientList();
-  // }, [])
-
-  // const getClientList = () => {
-  //   axios.get(`${process.env.REACT_APP_API_URL}/clients`, {headers: {Authorization: `Bearer ${storedToken}`}})
-  //   .then(response => {
-  //     setClients(response.data);
-  //   })
-  //   .catch(error => console.log("There was an error getting the client list from the API", error))
-  // }
-
   const getCurrentCar = (car) => {
-    setCurrentCar(car);
-  }
+      setCurrentCar(car);
+    }
 
+  const getClientList = (clients) => {
+    setClients(clients);
+  }
 
   return (
     <div className="App">
-    {/* <IsPrivate><NavbarComponent/></IsPrivate> */}
+    <NavbarComponent/>
 
     <Routes>
-      <Route path='/' element={<LandingPage clients={clients}/>}></Route>
-      <Route path='/clients' element={<IsPrivate><ClientListPage clients={clients}/></IsPrivate>}></Route>
+      <Route path='/' element={<LandingPage/>}></Route>
+      <Route path='/home/*' element={<HomePage callbackGetClientList={getClientList}></HomePage>}>
+
+
+      </Route>
+
+      <Route path='/clients' element={<IsPrivate><ClientListPage/></IsPrivate>}></Route>
       <Route path='/clients/create' element={<IsPrivate><AddClientPage/></IsPrivate>}></Route>
       <Route path='/clients/:clientId' element={<IsPrivate><ClientDetailsPage/></IsPrivate>}></Route>
       <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage clients={clients}/></IsPrivate>}></Route>
       <Route path='/clients/:clientId/cars/new' element={<IsPrivate><AddCarPage/></IsPrivate>}></Route>
+
       <Route path='/cars' element={<IsPrivate><CarListPage/></IsPrivate>}></Route>
       <Route path='/cars/:carId' element={<IsPrivate><CarDetailsPage getCurrentCar={getCurrentCar}/></IsPrivate>}></Route>
       <Route path='/cars/:carId/edit' element={<IsPrivate><EditCarPage currentCar={currentCar}/></IsPrivate>}></Route>

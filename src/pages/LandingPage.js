@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../context/auth.context'
 
