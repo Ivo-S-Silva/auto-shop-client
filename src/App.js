@@ -53,9 +53,9 @@ function App() {
     <IsPrivate><NavbarComponent/></IsPrivate>
 
     <Routes>
-      <Route path='/' element={<IsPrivate><LandingPage clients={clients}/></IsPrivate>}></Route>
+      <Route path='/' element={<LandingPage clients={clients}/>}></Route>
       <Route path='/clients' element={<IsPrivate><ClientListPage clients={clients}/></IsPrivate>}></Route>
-      <Route path='/clients/create' element={<IsPrivate><AddClientPage /></IsPrivate>}></Route>
+      <Route path='/clients/create' element={<IsPrivate><AddClientPage/></IsPrivate>}></Route>
       <Route path='/clients/:clientId' element={<IsPrivate><ClientDetailsPage/></IsPrivate>}></Route>
       <Route path='/clients/:clientId/edit' element={<IsPrivate><EditClientPage clients={clients}/></IsPrivate>}></Route>
       <Route path='/clients/:clientId/cars/new' element={<IsPrivate><AddCarPage/></IsPrivate>}></Route>
@@ -64,7 +64,6 @@ function App() {
       <Route path='/cars/:carId/edit' element={<IsPrivate><EditCarPage currentCar={currentCar}/></IsPrivate>}></Route>
 
       <Route path='/services' element={<IsPrivate><ServiceListPage/></IsPrivate>}></Route>
-      
       
       <Route path='/signup' element={<SignupPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
