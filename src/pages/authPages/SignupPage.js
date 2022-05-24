@@ -33,7 +33,7 @@ const handleSignupSubmit = (e) => {
             <p>Placeholder Text really cool</p>
         </Col>
         <Col className="d-flex justify-content-center align-items-center" style={{ height: "55vh"}}>
-          <Form className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", height: "55vh", backgroundColor: "#8AA29E", borderRadius: "25px"}}>
+          <Form onSubmit={handleSignupSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", height: "55vh", backgroundColor: "#8AA29E", borderRadius: "25px"}}>
             <h1 className="mb-5">Please Register</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
