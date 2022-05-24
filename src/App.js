@@ -50,7 +50,7 @@ function App() {
 
   return (
     <div className="App">
-    <IsPrivate><NavbarComponent/></IsPrivate>
+    {/* <IsPrivate><NavbarComponent/></IsPrivate> */}
 
     <Routes>
       <Route path='/' element={<LandingPage clients={clients}/>}></Route>
