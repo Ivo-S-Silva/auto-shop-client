@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 function AddClientPage(props) {
 
   const [name, setName] = useState('');
   const [fiscalNumber, setFiscalNumber] = useState(null);
+  const [clients, fetchClientList] = useOutletContext();
 
   const navigate = useNavigate();
   
@@ -23,11 +24,10 @@ function AddClientPage(props) {
 
     axios.post(process.env.REACT_APP_API_URL + '/clients', newClient, {headers: {Authorization: `Bearer ${storedToken}`}})
       .then(response => {
-        props.callbackGetClientList();
-
+        fetchClientList();
         setName('');
         setFiscalNumber(null);
-        navigate(`/clients`);
+        navigate(`/home/clients`);
       })
       .catch(error => console.log('There was an error creating new client', error));
   }

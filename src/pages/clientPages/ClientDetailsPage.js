@@ -31,7 +31,7 @@ function ClientDetailsPage() {
         <>
           <h1>Name: {client.name}</h1>
           <h2>Fiscal Number: {client.fiscalNumber}</h2>
-          <Button><Link to={`/clients/${clientId}/edit`} className='text-light' style={{textDecoration: "none"}}>Edit Client Info</Link></Button>
+          <Button><Link to={`/home/clients/${clientId}/edit`} className='text-light' style={{textDecoration: "none"}}>Edit Client Info</Link></Button>
           <h2>Cars owned:</h2>
           <table>
             {client.cars ? client.cars.map(car => {
@@ -47,7 +47,7 @@ function ClientDetailsPage() {
               )
             }) : <h3>Client has no registered cars.</h3>}
           </table>
-          <Button><Link to={`/clients/${clientId}/cars/new`} className='text-light' style={{textDecoration: "none"}}>Add New Car</Link></Button>
+          <Button><Link to={`/home/clients/${clientId}/cars/new`} className='text-light' style={{textDecoration: "none"}}>Add New Car</Link></Button>
         </>
       )}
     </>

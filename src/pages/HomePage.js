@@ -1,28 +1,32 @@
 import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
-import IsPrivate from '../Components/isPrivate'
-import { AuthContext } from '../context/auth.context'
-import AddCarPage from './carPages/AddCarPage'
-import CarDetailsPage from './carPages/CarDetailsPage'
-import CarListPage from './carPages/CarListPage'
-import EditCarPage from './carPages/EditCarPage'
-import AddClientPage from './clientPages/AddClientPage'
-import ClientDetailsPage from './clientPages/ClientDetailsPage'
-import ClientListPage from './clientPages/ClientListPage'
-import EditClientPage from './clientPages/EditClientPage'
-import ServiceListPage from './servicePages/ServiceListPage'
+import React, { useEffect, useState } from 'react'
+import { Outlet} from 'react-router-dom'
+
 
 function HomePage(props) {
 
 
+  const [clients, setClients] = useState([]);
 
-  return (
-      <>
+  // Retrieving the token from local storage to be able to send it in the headers
+  // of the query to the database with axios
+  const storedToken = localStorage.getItem('authToken');
+  
 
-    <div>HomePage</div>
-      </>
-  )
+const fetchClientList = () => {
+  axios.get(`${process.env.REACT_APP_API_URL}/clients`, {headers: {Authorization: `Bearer ${storedToken}`}})
+  .then(response => {
+    setClients(response.data)
+  })
+  .catch(error => console.log("There was an error getting the client list from the API", error))
+}
+
+useEffect(() => {
+  fetchClientList()
+}, [])
+
+
+  return <Outlet context={[clients, fetchClientList]}/>
 }
 
 export default HomePage

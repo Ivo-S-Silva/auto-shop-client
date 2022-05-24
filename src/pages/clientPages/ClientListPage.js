@@ -1,25 +1,12 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-function ClientListPage(props) {
+import { Link, useOutletContext } from 'react-router-dom';
 
-    const [clients, setClients] = useState([]);
 
-    const callbackGetClientList = props.callbackGetClientList;
-    // Retrieving the token from local storage to be able to send it in the headers
-    // of the query to the database with axios
-    const storedToken = localStorage.getItem('authToken');
-    
-  
-useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/clients`, {headers: {Authorization: `Bearer ${storedToken}`}})
-    .then(response => {
-      setClients(response.data)
-    })
-    .catch(error => console.log("There was an error getting the client list from the API", error))
-}, [])
+function ClientListPage() {
 
+    const [clients] = useOutletContext();
 
     const numberOfServices = (cars) => {
         let servicesTotal = 0;
@@ -36,7 +23,7 @@ useEffect(() => {
       return clients.map(client => {
         return(
             <tr>
-                <td><Link to={`/clients/${client._id}`} >{client.name}</Link></td>
+                <td><Link to={`/home/clients/${client._id}`} >{client.name}</Link></td>
                 <td>{client.cars.length}</td>
                 <td>{numberOfServices(client.cars)}</td>
             </tr>
