@@ -4,8 +4,6 @@ import { Outlet} from 'react-router-dom'
 
 
 function HomePage(props) {
-
-
   const [clients, setClients] = useState([]);
 
   // Retrieving the token from local storage to be able to send it in the headers

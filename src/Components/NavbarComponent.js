@@ -17,7 +17,7 @@ const renderNavbar = () => {
           </NavDropdown>
             
           <NavDropdown title="Cars" id="nav-cars-dropdown">
-            <NavDropdown.Item><NavLink to='/cars' className='text-dark' style={{textDecoration: "none"}}>Car List</NavLink></NavDropdown.Item>
+            <NavDropdown.Item><NavLink to='/home/cars' className='text-dark' style={{textDecoration: "none"}}>Car List</NavLink></NavDropdown.Item>
           </NavDropdown>
           <Nav.Link><NavLink to='/home/services'>Services</NavLink></Nav.Link>
           </Nav>

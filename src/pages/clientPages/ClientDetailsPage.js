@@ -38,7 +38,7 @@ function ClientDetailsPage() {
               return(
                 <tr>
                 <td>
-                {car.brand}, {car.model}
+                <Link to={`/home/cars/${car._id}`}>{car.brand}, {car.model}</Link>
                 </td>
                 <td>
                   Services: {car.services.length}

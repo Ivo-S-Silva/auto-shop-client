@@ -29,7 +29,7 @@ function AddCarPage() {
         setBrand('');
         setModel('');
         setLicensePlate('');
-        navigate(`/clients/${clientId}`);
+        navigate(`/home/clients/${clientId}`);
       })
       .catch(error => console.log('There was an error creating new car', error));
   }

@@ -1,11 +1,10 @@
-import React, { useContext } from 'react'
-import { Navbar } from 'react-bootstrap'
-import { Link, Navigate, Outlet } from 'react-router-dom'
-import { AuthContext } from '../context/auth.context'
+import React from 'react'
+import {Navigate} from 'react-router-dom'
+
 
 function LandingPage(props) {
 
-return <Navigate to='/home'/>
+  return <Navigate to='/home'/>
 }
 
 export default LandingPage

@@ -33,8 +33,8 @@ function CarListPage() {
                     return (
                     <>
                         <h1>{car.brand}, {car.model}, {car.licensePlate}</h1>
-                        <Link to={`/clients/${car.owner}`}>Go to Owner Page</Link>
-                        <Link to={`/cars/${car._id}`}>Go to Car details Page</Link>
+                        <Link to={`/home/clients/${car.owner}`}>Go to Owner Page</Link>
+                        <Link to={`/home/cars/${car._id}`}>Go to Car details Page</Link>
                     </>)
                 })}
             </>

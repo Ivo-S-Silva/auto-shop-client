@@ -8,8 +8,6 @@ function EditClientPage(props) {
   const {clientId} = useParams();
 
   const [clients, fetchClientList] = useOutletContext();
-
-
   const clientDetails = clients.find(client => client._id === clientId);
 
   const [name, setName] = useState(clientDetails.name);
@@ -17,6 +15,7 @@ function EditClientPage(props) {
 
   const navigate = useNavigate();
   
+
   const handleSubmit = (e) => {
    e.preventDefault();
 

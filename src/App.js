@@ -38,9 +38,7 @@ function App() {
         <Route path='cars' element={<IsPrivate><CarListPage/></IsPrivate>}></Route>
         <Route path='cars/:carId' element={<IsPrivate><CarDetailsPage/></IsPrivate>}></Route>
         <Route path='cars/:carId/edit' element={<IsPrivate><EditCarPage/></IsPrivate>}></Route>
-
         <Route path='services' element={<IsPrivate><ServiceListPage/></IsPrivate>}></Route>
-
       </Route>
 
       <Route path='/signup' element={<SignupPage/>}></Route>

@@ -1,18 +1,30 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate} from 'react-router-dom'
+import { useNavigate, useParams} from 'react-router-dom'
 
-function EditCarPage(props) {
-    const car = props.currentCar;
+function EditCarPage() {
+    const {carId} = useParams();
 
-    const [brand, setBrand] = useState(car.brand);
-    const [model, setModel] = useState(car.model);
-    const [licensePlate, setLicensePlate] = useState(car.licensePlate);
+    // const [car, setCar] = useState(null);
+    const [brand, setBrand] = useState(null);
+    const [model, setModel] = useState(null);
+    const [licensePlate, setLicensePlate] = useState(null);
 
     const storedToken = localStorage.getItem('authToken');
 
     const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/cars/${carId}`, {headers: { Authorization: `Bearer ${storedToken}` }})
+    .then(response => {
+      setBrand(response.data.brand)
+      setModel(response.data.model)
+      setLicensePlate(response.data.licensePlate)
+    })
+    .catch(error => console.log('There was an error getting the car information from the database', error))
+  }, [])
+
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -23,9 +35,9 @@ function EditCarPage(props) {
             licensePlate
         }
 
-        axios.put(`${process.env.REACT_APP_API_URL}/cars/${car._id}`, newCarDetails, {headers: { Authorization: `Bearer ${storedToken}` }})
+        axios.put(`${process.env.REACT_APP_API_URL}/cars/${carId}`, newCarDetails, {headers: { Authorization: `Bearer ${storedToken}` }})
           .then((response) => {
-            navigate(`/cars/${car._id}`);
+            navigate(`/home/cars/${carId}`);
           })
           .catch(error => console.log('There was an error updating the car details', error))
     }
