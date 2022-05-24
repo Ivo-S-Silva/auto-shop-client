@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Button, Card, Form } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom'
+import { Button, Form } from 'react-bootstrap';
+import { useNavigate} from 'react-router-dom'
 
 function EditCarPage(props) {
     const car = props.currentCar;

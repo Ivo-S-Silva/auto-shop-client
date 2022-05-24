@@ -34,6 +34,7 @@ useEffect(() => {
                                     <h3>Date: {service.serviceDate.substr(0, service.serviceDate.indexOf('T'))}</h3>
                                     <h3>Details: {service.serviceDetails}</h3>
                                     <h3>Status: {service.serviceStatus}</h3>
+                                    <hr></hr>
                                 </>)
                             })}
                         </>

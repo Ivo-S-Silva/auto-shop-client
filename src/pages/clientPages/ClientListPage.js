@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
-import { ListGroup, ListGroupItem, Table } from 'react-bootstrap';
+import React from 'react'
+import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../context/auth.context';
 
 function ClientListPage(props) {
 

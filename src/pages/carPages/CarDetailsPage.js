@@ -1,7 +1,5 @@
 import axios from 'axios';
-import { Button } from 'bootstrap';
 import React, { useEffect, useState } from 'react'
-import { Container } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 
 function CarDetailsPage(props) {
@@ -34,13 +32,20 @@ useEffect(() => {
         <h2>Model: {car.model}</h2>
         <h3>License Plate: {car.licensePlate}</h3>
         <Link to={`/cars/${car._id}/edit`}>Edit Car Information</Link>
-
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <h1>Service List</h1>
+        <hr></hr>
         {services ? services.map(service => {
         return(
             <>
             <h2>Service Date: {service.serviceDate.substr(0, service.serviceDate.indexOf('T'))}</h2>
             <h2>Service Date: {service.serviceDetails}</h2>
             <h2>Service Date: {service.serviceStatus}</h2>
+            <Link to={`/services/${service._id}/edit`}>Edit Service Information</Link>
+            <hr></hr>
             </>
     )
 }

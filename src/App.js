@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import { Link, NavLink, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import IsPrivate from './Components/isPrivate';
 import LandingPage from './pages/LandingPage';
 import SignupPage from './pages/authPages/SignupPage';
