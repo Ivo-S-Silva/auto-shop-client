@@ -1,11 +1,20 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function ServiceListPage(props) {
     const [cars, setCars] = useState([]);
+    const [services, setservices] = useState([]);
 
     const storedToken = localStorage.getItem('authToken');
+
+const storeServiceList = (cars) => {
+  cars.map(car => {
+    setservices(services => services.concat(car.services));
+  })
+}
+
 
 useEffect(() => {
     axios
@@ -13,7 +22,10 @@ useEffect(() => {
       headers: { Authorization: `Bearer ${storedToken}` },
     })
     .then((response) => {
-        setCars(response.data)
+       return setCars(response.data)
+    })
+    .then(() => {
+      storeServiceList(cars)
     })
     .catch((error) =>
       console.log(
@@ -23,24 +35,42 @@ useEffect(() => {
     );
 }, [])
 
+
   return (
-    <>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Details</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
         {cars.map(car => {
                     return (
                         <>  
                             {car.services.map(service => {
-                               return (<>
-                                    <Link to={`/cars/${car._id}`}>{car.brand} - {car.model}</Link>
-                                    <h3>Date: {service.serviceDate.substr(0, service.serviceDate.indexOf('T'))}</h3>
-                                    <h3>Details: {service.serviceDetails}</h3>
-                                    <h3>Status: {service.serviceStatus}</h3>
-                                    <hr></hr>
-                                </>)
+                               return (
+                                    <tr key={service._id}>
+                                      <td className='col-1'><Button variant='secondary' href={`/home/clients/${car.owner}`}>Owner</Button></td>
+                                      <td className='col-1'><Button variant='secondary' href={`/home/cars/${car._id}`}>Service</Button></td>
+                                      <td>{car.brand}</td>
+                                      <td>{car.model}</td>
+                                      <td>{`${service.serviceDetails.slice(0, 60)}...`}</td>
+                                      <td>{service.serviceDate.substr(0, service.serviceDate.indexOf('T'))}</td>
+                                      <td>{service.serviceStatus}</td>
+                                    </tr>
+                                )
                             })}
                         </>
                         )
                 })}
-    </>
+        </tbody>
+      </Table>
   )
 }
 

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Button } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 
 function CarDetailsPage(props) {
@@ -36,6 +37,7 @@ useEffect(() => {
         <br></br>
         <br></br>
         <h1>Service List</h1>
+        <Button><Link to={`/home/cars/${carId}/new-service`} className='text-light' style={{textDecoration: "none"}}>Add New Service</Link></Button>
         <hr></hr>
         {services ? services.map(service => {
         return(

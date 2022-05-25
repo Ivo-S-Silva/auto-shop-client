@@ -16,6 +16,8 @@ import CarDetailsPage from './pages/carPages/CarDetailsPage';
 import ServiceListPage from './pages/servicePages/ServiceListPage';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
+import AddServicePage from './pages/servicePages/AddServicePage';
+import EditServicePage from './pages/servicePages/EditServicePage';
 
 
 function App() {
@@ -39,6 +41,8 @@ function App() {
         <Route path='cars/:carId' element={<IsPrivate><CarDetailsPage/></IsPrivate>}></Route>
         <Route path='cars/:carId/edit' element={<IsPrivate><EditCarPage/></IsPrivate>}></Route>
         <Route path='services' element={<IsPrivate><ServiceListPage/></IsPrivate>}></Route>
+        <Route path='cars/:carId/new-service' element={<IsPrivate><AddServicePage/></IsPrivate>}></Route>
+        <Route path='cars/:carId/:serviceId/edit-service' element={<IsPrivate><EditServicePage/></IsPrivate>}></Route>
       </Route>
 
       <Route path='/signup' element={<SignupPage/>}></Route>

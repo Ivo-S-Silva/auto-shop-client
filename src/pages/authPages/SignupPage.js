@@ -45,7 +45,7 @@ const handleSignupSubmit = (e) => {
               <Form.Label>Password</Form.Label>
               <Form.Control style={{ width: "20vw"}} type="password" name="password" value={password} required={true} onChange={e => setPassword(e.target.value)} placeholder="Password" />
             </Form.Group>
-            <Button variant="primary" type="submit">Submit</Button>
+            <Button variant="danger" type="submit">Submit</Button>
             <p className="mt-4">Already have an account? <Link to={"/login"}>Login</Link></p>
           </Form>
 

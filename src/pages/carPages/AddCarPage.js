@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 
 function AddCarPage() {
     const {clientId} = useParams();
@@ -10,6 +10,7 @@ function AddCarPage() {
   const [model, setModel] = useState('');
   const [licensePlate, setLicensePlate] = useState('')
   const [errorMessage, setErrorMessage] = useState('');
+  const [clients, fetchClientList] = useOutletContext();
 
   const navigate = useNavigate();
   
@@ -30,6 +31,7 @@ function AddCarPage() {
         setBrand('');
         setModel('');
         setLicensePlate('');
+        fetchClientList();
         navigate(`/home/clients/${clientId}`);
       })
       .catch(error => {
@@ -57,7 +59,7 @@ function AddCarPage() {
     <Form.Control required={true} name='licensePlate' value={licensePlate} type="text" placeholder="Enter license plate" onChange={e => {setLicensePlate(e.target.value)}} />
   </Form.Group>
 
-  <Button variant="primary" type="submit">
+  <Button variant="secondary" type="submit">
     Submit
   </Button>
 </Form>

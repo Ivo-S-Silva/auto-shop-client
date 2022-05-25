@@ -65,7 +65,7 @@ function EditCarPage() {
     <Form.Control required={true} unique={true} name='license Plate' value={licensePlate} type="text" onChange={e => {setLicensePlate(e.target.value)}} />
   </Form.Group>
 
-  <Button variant="primary" type="submit">
+  <Button variant="secondary" type="submit">
     Submit
   </Button>
 </Form>
