@@ -39,12 +39,12 @@ function LoginPage() {
       <Row className="align-items-center" style={{ height: "100vh" }}>
         <Col>
             <h1>Welcome</h1>
-            <p>Placeholder Text really cool</p>
+            <p>Placeholder Text</p>
         </Col>
-        <Col className="d-flex justify-content-center align-items-center" style={{ height: "55vh"}}>
+        <Col className="d-flex justify-content-center align-items-center" style={{ minHeight: "55vh", maxHeight: "auto"}}>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <Form onSubmit={handleLoginSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", height: "55vh", backgroundColor: "#8AA29E", borderRadius: "25px"}}>
-            <h1 className="mb-5">Please Login</h1>
+          <Form onSubmit={handleLoginSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", minHeight: "55vh", maxHeight: "auto", backgroundColor: "#8AA29E", borderRadius: "25px"}}>
+            <h1 className="mb-2 mt-2">Please Login</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control style={{ width: "20vw"}} type="email" name="email" value={email} required={true} onChange={e => setEmail(e.target.value)} placeholder="Enter email" />

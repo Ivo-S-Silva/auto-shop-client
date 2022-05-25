@@ -1,13 +1,15 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Alert, Button, Form } from 'react-bootstrap'
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
 function AddClientPage(props) {
 
   const [name, setName] = useState('');
   const [fiscalNumber, setFiscalNumber] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const [clients, fetchClientList] = useOutletContext();
+  
 
   const navigate = useNavigate();
   
@@ -29,11 +31,16 @@ function AddClientPage(props) {
         setFiscalNumber(null);
         navigate(`/home/clients`);
       })
-      .catch(error => console.log('There was an error creating new client', error));
+      .catch(error => {
+        const errorDescription = error.response.data.message;
+        console.log("There was an error creating the new client.", errorDescription);
+        setErrorMessage(errorDescription);
+      });
   }
 
   return (
     <Form onSubmit={handleSubmit}>
+     {errorMessage && <Alert key={'danger'} variant={'danger'}>{errorMessage}</Alert>}
   <Form.Group className="mb-3" controlId="formBasicEmail">
     <Form.Label>Name:</Form.Label>
     <Form.Control required={true} type="text" name='name' value={name} placeholder="Enter client name" onChange={e => {setName(e.target.value)}}/>

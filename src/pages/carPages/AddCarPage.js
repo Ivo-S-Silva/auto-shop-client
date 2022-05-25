@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Alert, Button, Form } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom';
 
 function AddCarPage() {
@@ -9,6 +9,7 @@ function AddCarPage() {
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
   const [licensePlate, setLicensePlate] = useState('')
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
   
@@ -31,11 +32,16 @@ function AddCarPage() {
         setLicensePlate('');
         navigate(`/home/clients/${clientId}`);
       })
-      .catch(error => console.log('There was an error creating new car', error));
+      .catch(error => {
+        const errorDescription = error.response.data.message;
+        console.log('There was an error creating new car', errorDescription)
+        setErrorMessage(errorDescription)
+      });
   }
 
   return (
     <Form onSubmit={handleSubmit}>
+    {errorMessage && <Alert key={'danger'} variant={'danger'}>{errorMessage}</Alert>}
   <Form.Group className="mb-3" controlId="formBasicBrand">
     <Form.Label>Brand:</Form.Label>
     <Form.Control required={true} type="text" name='brand' value={brand} placeholder="Enter brand name" onChange={e => {setBrand(e.target.value)}}/>

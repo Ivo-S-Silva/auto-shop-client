@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Col, Container, Form, Row, Button } from 'react-bootstrap';
+import { Alert, Col, Container, Form, Row, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
 function SignupPage() {
@@ -30,12 +30,13 @@ const handleSignupSubmit = (e) => {
       <Row className="align-items-center" style={{ height: "100vh" }}>
         <Col>
             <h1>Welcome</h1>
-            <p>Placeholder Text really cool</p>
+            <p>Placeholder Text</p>
         </Col>
-        <Col className="d-flex justify-content-center align-items-center" style={{ height: "55vh"}}>
-          <Form onSubmit={handleSignupSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", height: "55vh", backgroundColor: "#8AA29E", borderRadius: "25px"}}>
-            <h1 className="mb-5">Please Register</h1>
+        <Col className="d-flex justify-content-center align-items-center" style={{ minHeight: "55vh", maxHeight: "auto"}}>
+          <Form onSubmit={handleSignupSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", minHeight: "55vh", maxHeight: "auto", backgroundColor: "#8AA29E", borderRadius: "25px"}}>
+            <h1 className="mb-2 mt-2">Please Register</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
+              {errorMessage && <Alert key={'danger'} variant={'danger'}>{errorMessage}</Alert>}
               <Form.Label>Email address</Form.Label>
               <Form.Control style={{ width: "20vw"}} type="email" name="email" value={email} required={true} onChange={e => setEmail(e.target.value)} placeholder="Enter email" />
             </Form.Group>

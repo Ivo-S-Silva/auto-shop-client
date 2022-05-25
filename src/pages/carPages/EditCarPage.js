@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap';
+import { Alert, Button, Form } from 'react-bootstrap';
 import { useNavigate, useParams} from 'react-router-dom'
 
 function EditCarPage() {
@@ -10,6 +10,7 @@ function EditCarPage() {
     const [brand, setBrand] = useState(null);
     const [model, setModel] = useState(null);
     const [licensePlate, setLicensePlate] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const storedToken = localStorage.getItem('authToken');
 
@@ -39,11 +40,16 @@ function EditCarPage() {
           .then((response) => {
             navigate(`/home/cars/${carId}`);
           })
-          .catch(error => console.log('There was an error updating the car details', error))
+          .catch(error => {
+            const errorDescription = error.response.data.message;
+            console.log('There was an error editing the information of the car', errorDescription)
+            setErrorMessage(errorDescription)
+          })
     }
 
   return (
     <Form onSubmit={handleSubmit}>
+    {errorMessage && <Alert key={'danger'} variant={'danger'}>{errorMessage}</Alert>}
   <Form.Group className="mb-3" controlId="formBasicBrand">
     <Form.Label>Brand:</Form.Label>
     <Form.Control required={true} type="text" name='brand' value={brand} onChange={e => {setBrand(e.target.value)}}/>

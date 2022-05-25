@@ -12,6 +12,7 @@ function EditClientPage(props) {
 
   const [name, setName] = useState(clientDetails.name);
   const [fiscalNumber, setFiscalNumber] = useState(clientDetails.fiscalNumber);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
   
@@ -31,7 +32,11 @@ function EditClientPage(props) {
       .then(response => {
         navigate(`/home/clients/${clientId}`);
       })
-      .catch(error => console.log('There was an error creating new client', error));
+      .catch(error => {
+        const errorDescription = error.response.data.message;
+        console.log('There was an error editing client information', errorDescription);
+        setErrorMessage(errorDescription);
+      });
   }
 
   return (
