@@ -18,6 +18,7 @@ import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import AddServicePage from './pages/servicePages/AddServicePage';
 import EditServicePage from './pages/servicePages/EditServicePage';
+import ErrorPage from './pages/ErrorPage';
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
     <NavbarComponent/>
 
     <Routes>
-      <Route path='/' element={<IsPrivate><LandingPage/></IsPrivate>}></Route>
+      <Route path='/' element={}></Route>
       <Route path='/home/*' element={<HomePage></HomePage>}>
         <Route index element={<DashboardPage/>}/>
         <Route path='dashboard' element={<IsPrivate><DashboardPage/></IsPrivate>}></Route>
@@ -47,6 +48,7 @@ function App() {
 
       <Route path='/signup' element={<SignupPage/>}></Route>
       <Route path='/login' element={<LoginPage/>}></Route>
+      <Route path='/*' element={<ErrorPage/>}></Route>
     </Routes>
     </div>
   );
