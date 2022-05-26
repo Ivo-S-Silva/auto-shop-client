@@ -22,8 +22,10 @@ function LoginPage() {
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, requestBody)
       .then((response) => {
         storeToken(response.data.authToken)
-        authenticateUser()
-        navigate()
+        return authenticateUser()
+      })
+      .then(() => {
+        navigate();
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
