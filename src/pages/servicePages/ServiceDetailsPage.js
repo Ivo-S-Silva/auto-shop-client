@@ -2,7 +2,7 @@ import axios from "axios";
 import { Tab } from "bootstrap";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Row, Tabs } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 
 function ServiceDetailsPage() {
@@ -14,6 +14,8 @@ function ServiceDetailsPage() {
   const [service, setService] = useState(null);
   const [car, setCar] = useState(null);
   const [client, setClient] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -41,6 +43,17 @@ function ServiceDetailsPage() {
       );
   }, []);
 
+const deleteService = () => {
+  axios.delete(`${process.env.REACT_APP_API_URL}/cars/${car._id}/${service._id}`, {
+    headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }
+  })
+  .then(() => {
+    navigate(`/home/cars/${car._id}`)
+  })
+  .catch(error => console.log('There was an error removing the service from the database.', error))
+}
+
+
   return (
     <>
       <h1>Service</h1>
@@ -56,9 +69,9 @@ function ServiceDetailsPage() {
           ) : (
             <Card className="mt-5">
             <div className="mt-4 d-flex justify-content-center ">
-              <Button style={{width: "12vw"}} variant="danger">Edit Service</Button>
+              <Button style={{width: "12vw"}} variant="danger"><Link className='text-light' style={{textDecoration: "none"}} to={`/home/cars/${car._id}/${service._id}/edit-service`}>Edit Service</Link></Button>
               <div style={{width: '5vw'}}></div>
-              <Button style={{width: "12vw"}} variant="outline-danger">Delete Service</Button>
+              <Button style={{width: "12vw"}} variant="outline-danger" onClick={() => {deleteService(service._id)}}>Delete Service</Button>
             </div>
               <Card.Body className="d-flex flex-column justify-content-center align-items-center">
                 <h2>Service Description</h2>

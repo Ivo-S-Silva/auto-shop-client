@@ -12,7 +12,7 @@ import NavbarComponent from './Components/NavbarComponent';
 import CarListPage from './pages/carPages/CarListPage';
 import AddCarPage from './pages/carPages/AddCarPage';
 import EditCarPage from './pages/carPages/EditCarPage';
-import CarDetailsComponent from './Components/CarDetailsComponent';
+import CarDetailsPage from './pages/carPages/CarDetailsPage';
 import ServiceListPage from './pages/servicePages/ServiceListPage';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
@@ -39,7 +39,7 @@ function App() {
         <Route path='clients/:clientId/cars/new' element={<IsPrivate><AddCarPage/></IsPrivate>}></Route>
 
         <Route path='cars/*' element={<IsPrivate><CarListPage/></IsPrivate>}>
-          <Route path=':carId' element={<IsPrivate><CarDetailsComponent/></IsPrivate>}></Route>
+          <Route path=':carId' element={<IsPrivate><CarDetailsPage/></IsPrivate>}></Route>
           <Route path=':carId/edit' element={<IsPrivate><EditCarPage/></IsPrivate>}></Route>
         </Route>
         <Route path='cars/:carId/new-service' element={<IsPrivate><AddServicePage/></IsPrivate>}></Route>

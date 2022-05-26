@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card, Col, Container, ListGroup, Modal, Row } from 'react-bootstrap';
 import { Link, useNavigate, useOutletContext, useParams } from 'react-router-dom';
-import { AuthContext } from '../context/auth.context';
+import { AuthContext } from '../../context/auth.context';
 
-function CarDetailsComponent() {
+function CarDetailsPage() {
 
 const {carId} = useParams();
 
@@ -76,4 +76,4 @@ const renderCarDetails = (car) => {
 return renderCarDetails(selectedCar);
 }
 
-export default CarDetailsComponent
+export default CarDetailsPage

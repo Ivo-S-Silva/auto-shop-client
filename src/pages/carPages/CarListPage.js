@@ -43,7 +43,6 @@ function CarListPage() {
   };
 
   const deleteCar = (carToDelete) => {
-    console.log(carToDelete)
     axios.delete(`${process.env.REACT_APP_API_URL}/cars/${carToDelete}`, {
       headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }
     })
