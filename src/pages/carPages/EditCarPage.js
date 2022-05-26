@@ -16,18 +16,18 @@ function EditCarPage() {
 
     const storedToken = localStorage.getItem('authToken');
     const { user } = useContext(AuthContext);
-    const [cars, getCarList] = useOutletContext();
+    const [cars, getCarList, deleteCar, currentCar, setCurrentCar] = useOutletContext();
 
     const navigate = useNavigate();
 
 
 useEffect(() => {
-    const currentCar = cars.find(car => car._id == carId)
-      setBrand(currentCar.brand)
-      setModel(currentCar.model)
-      setLicensePlate(currentCar.licensePlate)
-      setImage(currentCar.imageUrl)
-      setCurrentImage(currentCar.imageUrl)
+    const foundCar = cars.find(car => car._id == carId)
+      setBrand(foundCar.brand)
+      setModel(foundCar.model)
+      setLicensePlate(foundCar.licensePlate)
+      setImage(foundCar.imageUrl)
+      setCurrentImage(foundCar.imageUrl)
 
 }, [])
 
@@ -67,7 +67,8 @@ async function defineImage() {
       })  
         .then((response) => {
           getCarList()
-          navigate(`/home/cars/${carId}`)
+          setCurrentCar(response.data)
+          navigate(`/home/cars/${response.data._id}`)
           })
           .catch(error => {
             const errorDescription = error.response.data.message;

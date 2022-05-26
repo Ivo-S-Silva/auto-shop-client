@@ -12,12 +12,11 @@ const [selectedCar, setSelectedCar] = useState(null);
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
 
-const [carList, getCarList, deleteCar] = useOutletContext();
+const [carList, getCarList, deleteCar, currentCar] = useOutletContext();
 
 useEffect(() => {
-  const foundCar = carList.find(car => car._id == carId);
-  setSelectedCar(foundCar);
-}, [carId])
+  setSelectedCar(currentCar);
+}, [carId, currentCar])
 
 const renderCarDetails = (car) => {
   return (car ?
