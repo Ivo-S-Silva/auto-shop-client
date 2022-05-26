@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import {Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
 
@@ -11,11 +11,11 @@ function LoginPage() {
 
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     
-
-
     const requestBody = { email, password };
 
     axios
@@ -23,6 +23,7 @@ function LoginPage() {
       .then((response) => {
         storeToken(response.data.authToken)
         authenticateUser()
+        navigate()
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
