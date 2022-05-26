@@ -11,6 +11,7 @@ function EditCarPage() {
     const [model, setModel] = useState(null);
     const [licensePlate, setLicensePlate] = useState(null);
     const [image, setImage] = useState(null);
+    const [currentImage, setCurrentImage] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
 
     const storedToken = localStorage.getItem('authToken');
@@ -24,30 +25,43 @@ function EditCarPage() {
       setModel(response.data.model)
       setLicensePlate(response.data.licensePlate)
       setImage(response.data.imageUrl)
+      setCurrentImage(response.data.imageUrl)
     })
     .catch(error => console.log('There was an error getting the car information from the database', error))
   }, [])
+
+async function defineImage() {
+  let imageFile;
+
+  if(image) {
+    const data = new FormData()
+      data.append("file", image)  
+      data.append("upload_preset", "standard")
+
+      let response = await axios.post("  https://api.cloudinary.com/v1_1/dq8uzmgrq/image/upload", data, {headers: { "X-Requested-With": "XMLHttpRequest" }})
+      imageFile = response.data.secure_url;
+
+      return imageFile;
+  } else {
+    imageFile = currentImage;
+
+    return imageFile;
+  }
+}
 
 
     const handleSubmit = (e) => {
       e.preventDefault();
 
-      const data = new FormData()
-      data.append("file", image)  
-      data.append("upload_preset", "standard")
-
-      axios.post("  https://api.cloudinary.com/v1_1/dq8uzmgrq/image/upload", data, {
-        headers: { "X-Requested-With": "XMLHttpRequest" },
-      })
+    defineImage()
       .then(response => {
 
         const newCarDetails = {
             brand,
             model,
             licensePlate,
-            imageUrl: response.data.secure_url
+            imageUrl: response
         }
-
         return axios.put(`${process.env.REACT_APP_API_URL}/cars/${carId}`, newCarDetails, {headers: { Authorization: `Bearer ${storedToken}` }})
       })  
         .then((response) => {

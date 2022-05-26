@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Row, Button, Container } from "react-bootstrap";
+import { Card, Col, Row, Container } from "react-bootstrap";
 import clientListImage from "../assets/images/client-list-image.jpg";
 import carListImage from "../assets/images/car-list-image.jpg";
 import serviceListImage from "../assets/images/service-list-image.jpg";
