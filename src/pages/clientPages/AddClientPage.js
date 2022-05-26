@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react'
-import { Alert, Button, Form } from 'react-bootstrap'
+import { Alert, Button, Col, Form, Row } from 'react-bootstrap'
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 
@@ -41,22 +41,44 @@ function AddClientPage(props) {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-     {errorMessage && <Alert key={'danger'} variant={'danger'}>{errorMessage}</Alert>}
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Label>Name:</Form.Label>
-    <Form.Control required={true} type="text" name='name' value={name} placeholder="Enter client name" onChange={e => {setName(e.target.value)}}/>
-  </Form.Group>
+    <Row className="col-12 mt-3">
+      <Col className="col-3"></Col>
+      <Col className="col-6" style={{backgroundColor: "#f2f2f2"}}>
+        <Form onSubmit={handleSubmit}>
+        <Form.Text><h1 className='mb-4 mt-4'>Add Client Information</h1></Form.Text>
+          <Form.Group className="mb-3" controlId="formBasicName">
+            <Form.Label>Name:</Form.Label>
+            <Form.Control
+              required={true}
+              type="text"
+              name="name"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+          </Form.Group>
 
-  <Form.Group className="mb-3" controlId="formBasicPassword">
-    <Form.Label>Fiscal Number</Form.Label>
-    <Form.Control required={true} name='fiscalNumber' value={fiscalNumber} type="Number" placeholder="Fiscal Number" onChange={e => {setFiscalNumber(e.target.value)}} />
-  </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicFiscalNumber">
+            <Form.Label>Fiscal Number</Form.Label>
+            <Form.Control
+              required={true}
+              name="fiscalNumber"
+              value={fiscalNumber}
+              type="Number"
+              onChange={(e) => {
+                setFiscalNumber(e.target.value);
+              }}
+            />
+          </Form.Group>
 
-  <Button variant="danger" type="submit">
-    Submit
-  </Button>
-</Form>
+          <Button className='mb-3' variant="danger" type="submit">
+            Submit
+          </Button>
+        </Form>
+      </Col>
+      <Col className="col-3"></Col>
+    </Row>
   )
 }
 

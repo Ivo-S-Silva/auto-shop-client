@@ -37,9 +37,9 @@ function AddServicePage() {
   }
 
   return (
-    <Row className='col-12'>
+    <Row className='col-12 mt-3'>
     <Col className='col-3'></Col>
-    <Col className='col-6'>
+    <Col className='col-6' style={{backgroundColor: "#f2f2f2"}}>
       <Form onSubmit={handleSubmit}>
       <Form.Text><h1 className='mb-4 mt-4'>Add New Service</h1></Form.Text>
         <Form.Group className="mb-3" xs='auto' controlId="formBasicBrand">
@@ -71,7 +71,7 @@ function AddServicePage() {
           />
         </Form.Group>
 
-        <Button variant="danger" type="submit">
+        <Button className='mb-3' variant="danger" type="submit">
           Submit
         </Button>
       </Form>
