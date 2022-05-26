@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 
 function CarListPage() {
@@ -10,6 +10,8 @@ function CarListPage() {
 
   const storedToken = localStorage.getItem("authToken");
   const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCarList();
@@ -29,7 +31,6 @@ function CarListPage() {
             if(y.brand > x.brand) return -1;
             return x.model - y.model;
         })
-
         setCarList(sortedResponse);
       }
       })
@@ -40,6 +41,18 @@ function CarListPage() {
         )
       );
   };
+
+  const deleteCar = (carToDelete) => {
+    console.log(carToDelete)
+    axios.delete(`${process.env.REACT_APP_API_URL}/cars/${carToDelete}`, {
+      headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }
+    })
+    .then(() => {
+      getCarList();
+      navigate('/home/cars')
+    })
+    .catch(error => console.log('There was an error removing the car from the database.', error))
+  }
 
   const renderCarList = (page) => {    
     return cars.map((car) => {
@@ -70,7 +83,7 @@ function CarListPage() {
         {cars ? renderCarList() : <h2 className='mt-5'>There are no cars currently registered.</h2>}
       </Col>
       <Col className='col-6'>
-        {currentCar ? <Outlet context={[cars, getCarList, currentCar]}/> : <h2 className="mt-5">Select a car to see detailed information.</h2> }
+        {currentCar ? <Outlet context={[cars, getCarList, deleteCar]}/> : <h2 className="mt-5">Select a car to see detailed information.</h2> }
       </Col>
     </Row>
     </>
