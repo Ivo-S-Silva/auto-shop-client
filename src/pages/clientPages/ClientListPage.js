@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
-import { useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 function ClientListPage() {
   const [clients] = useOutletContext();
@@ -32,9 +32,8 @@ function ClientListPage() {
     });
   };
 
-  return (
-    <>
-      <Table striped bordered hover>
+  return (clients ? 
+    <Table striped bordered hover>
         <thead>
           <tr>
             <th></th>
@@ -44,10 +43,14 @@ function ClientListPage() {
           </tr>
         </thead>
         <tbody>
-          {clients === null ? <p>Loading...</p> : renderClientList()}
+          {renderClientList()}
         </tbody>
-      </Table>
-    </>
+      </Table> : 
+      <>
+        <h1 className="mt-3">There aren't currently any clients registered.</h1>
+        <Button variant='danger'><Link to='/home/clients/create' className='text-white' style={{textDecoration: "none"}}>Add New Client</Link></Button>
+      </>
+
   );
 }
 
