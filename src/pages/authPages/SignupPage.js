@@ -34,8 +34,8 @@ const handleSignupSubmit = (e) => {
         <Col className="d-flex justify-content-center align-items-center" style={{ minHeight: "55vh", maxHeight: "auto"}}>
           <Form onSubmit={handleSignupSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", minHeight: "55vh", maxHeight: "auto", backgroundColor: "#f2f2f2", borderRadius: "25px"}}>
             <h1 className="mb-2 mt-2">Please Register</h1>
+            {errorMessage && <Alert key='danger' variant='danger'>{errorMessage}</Alert>}
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              {errorMessage && <Alert key={'danger'} variant={'danger'}>{errorMessage}</Alert>}
               <Form.Label>Email address</Form.Label>
               <Form.Control style={{ width: "20vw"}} type="email" name="email" value={email} required={true} onChange={e => setEmail(e.target.value)} placeholder="Enter email" />
             </Form.Group>
