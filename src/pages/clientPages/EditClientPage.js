@@ -1,13 +1,15 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { AuthContext } from '../../context/auth.context';
 
 function EditClientPage(props) {
 
   const {clientId} = useParams();
 
   const [clients, fetchClientList] = useOutletContext();
+  const { user } = useContext(AuthContext);
   const clientDetails = clients.find(client => client._id === clientId);
 
   const [name, setName] = useState(clientDetails.name);
@@ -28,7 +30,7 @@ function EditClientPage(props) {
     const storedToken = localStorage.getItem('authToken');
 
 
-    axios.put(`${process.env.REACT_APP_API_URL}/clients/${clientId}`, newClientDetails, {headers: {Authorization: `Bearer ${storedToken}`}})
+    axios.put(`${process.env.REACT_APP_API_URL}/clients/${clientId}`, newClientDetails, {headers: {Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id}})
       .then(response => {
         navigate(`/home/clients/${clientId}`);
       })

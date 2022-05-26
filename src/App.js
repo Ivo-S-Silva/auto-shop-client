@@ -40,12 +40,12 @@ function App() {
 
         <Route path='cars/*' element={<IsPrivate><CarListPage/></IsPrivate>}>
           <Route path=':carId' element={<IsPrivate><CarDetailsComponent/></IsPrivate>}></Route>
+          <Route path=':carId/edit' element={<IsPrivate><EditCarPage/></IsPrivate>}></Route>
         </Route>
-        <Route path='cars/:carId/edit' element={<IsPrivate><EditCarPage/></IsPrivate>}></Route>
-        <Route path='services' element={<IsPrivate><ServiceListPage/></IsPrivate>}></Route>
         <Route path='cars/:carId/new-service' element={<IsPrivate><AddServicePage/></IsPrivate>}></Route>
         <Route path='cars/:carId/:serviceId' element={<IsPrivate><ServiceDetailsPage/></IsPrivate>}></Route>
         <Route path='cars/:carId/:serviceId/edit-service' element={<IsPrivate><EditServicePage/></IsPrivate>}></Route>
+        <Route path='services' element={<IsPrivate><ServiceListPage/></IsPrivate>}></Route>
       </Route>
 
       <Route path='/signup' element={<SignupPage/>}></Route>

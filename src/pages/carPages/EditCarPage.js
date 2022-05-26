@@ -1,13 +1,12 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap';
-import { useNavigate, useParams} from 'react-router-dom'
+import { Navigate, useNavigate, useOutletContext, useParams} from 'react-router-dom'
 import { AuthContext } from '../../context/auth.context';
 
 function EditCarPage() {
     const {carId} = useParams();
 
-    // const [car, setCar] = useState(null);
     const [brand, setBrand] = useState(null);
     const [model, setModel] = useState(null);
     const [licensePlate, setLicensePlate] = useState(null);
@@ -17,20 +16,20 @@ function EditCarPage() {
 
     const storedToken = localStorage.getItem('authToken');
     const { user } = useContext(AuthContext);
+    const [cars, getCarList] = useOutletContext();
 
     const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/cars/${carId}`, {headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }})
-    .then(response => {
-      setBrand(response.data.brand)
-      setModel(response.data.model)
-      setLicensePlate(response.data.licensePlate)
-      setImage(response.data.imageUrl)
-      setCurrentImage(response.data.imageUrl)
-    })
-    .catch(error => console.log('There was an error getting the car information from the database', error))
-  }, [])
+
+useEffect(() => {
+    const currentCar = cars.find(car => car._id == carId)
+      setBrand(currentCar.brand)
+      setModel(currentCar.model)
+      setLicensePlate(currentCar.licensePlate)
+      setImage(currentCar.imageUrl)
+      setCurrentImage(currentCar.imageUrl)
+
+}, [])
 
 async function defineImage() {
   let imageFile;
@@ -67,7 +66,8 @@ async function defineImage() {
         return axios.put(`${process.env.REACT_APP_API_URL}/cars/${carId}`, newCarDetails, {headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }})
       })  
         .then((response) => {
-            navigate(`/home/cars/${carId}`);
+          getCarList()
+          navigate(`/home/cars/${carId}`)
           })
           .catch(error => {
             const errorDescription = error.response.data.message;

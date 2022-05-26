@@ -37,7 +37,7 @@ function AddServicePage() {
   }
 
   return (
-    <Row>
+    <Row className='col-12'>
     <Col className='col-3'></Col>
     <Col className='col-6'>
       <Form onSubmit={handleSubmit}>

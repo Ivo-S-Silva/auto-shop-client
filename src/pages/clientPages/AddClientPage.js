@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap'
 import { useNavigate, useOutletContext } from 'react-router-dom';
+import { AuthContext } from '../../context/auth.context';
 
 function AddClientPage(props) {
 
@@ -9,6 +10,7 @@ function AddClientPage(props) {
   const [fiscalNumber, setFiscalNumber] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [clients, fetchClientList] = useOutletContext();
+  const { user } = useContext(AuthContext);
   
 
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ function AddClientPage(props) {
     const storedToken = localStorage.getItem('authToken');
 
 
-    axios.post(process.env.REACT_APP_API_URL + '/clients', newClient, {headers: {Authorization: `Bearer ${storedToken}`}})
+    axios.post(process.env.REACT_APP_API_URL + '/clients', newClient, {headers: {Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id}})
       .then(response => {
         fetchClientList();
         setName('');

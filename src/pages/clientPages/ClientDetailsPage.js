@@ -1,18 +1,21 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import { AuthContext } from "../../context/auth.context";
 
 function ClientDetailsPage() {
   const { clientId } = useParams();
   const [client, setClient] = useState({});
+
+  const { user } = useContext(AuthContext);
 
   const storedToken = localStorage.getItem('authToken');
 
   useEffect(() => {
     axios
     .get(`${process.env.REACT_APP_API_URL}/clients/${clientId}`, {
-      headers: { Authorization: `Bearer ${storedToken}` },
+      headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id },
     })
     .then((response) => setClient(response.data))
     .catch((error) => {

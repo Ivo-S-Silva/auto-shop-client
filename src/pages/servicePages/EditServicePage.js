@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 
 function EditServicePage() {
@@ -39,7 +39,7 @@ function EditServicePage() {
       .then(() => {
         setServiceDate('');
         setServiceDetails('');
-        navigate(`/home/cars/${carId}`);
+        return <Navigate to={`/home/cars/${carId}`}/>
       })
       .catch(error => {
         console.log('There was an error creating new service', error)

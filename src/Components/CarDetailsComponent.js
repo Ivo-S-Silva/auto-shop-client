@@ -22,7 +22,7 @@ const navigate = useNavigate();
 
 useEffect(() => {
   setCar(cars.find(car => car._id == carId))
-}, [carId])
+}, [carId, cars])
 
 
 const deleteCar = (carId) => {
@@ -73,7 +73,7 @@ const deleteCar = (carId) => {
             <ListGroup>
               {car.services ? car.services.map(service => {
                 return(
-                    <ListGroup.Item action href={`/home/services/${service._id}`}>
+                    <ListGroup.Item action href={`/home/cars/${car._id}/${service._id}`}>
                       <p>Service Date: {service.serviceDate.substr(0, service.serviceDate.indexOf('T'))}</p>
                       <p>Service Details: {service.serviceDetails.length > 60 ? service.serviceDetails.slice(0, 60) + "..." : service.serviceDetails}</p>
                       <p>Service Status: {service.serviceStatus}</p>
