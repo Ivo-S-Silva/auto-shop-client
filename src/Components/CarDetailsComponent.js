@@ -75,7 +75,7 @@ const deleteCar = (carId) => {
                 return(
                     <ListGroup.Item action href={`/home/services/${service._id}`}>
                       <p>Service Date: {service.serviceDate.substr(0, service.serviceDate.indexOf('T'))}</p>
-                      <p>Service Details: {service.serviceDetails.slice(0, 60)}...</p>
+                      <p>Service Details: {service.serviceDetails.length > 60 ? service.serviceDetails.slice(0, 60) + "..." : service.serviceDetails}</p>
                       <p>Service Status: {service.serviceStatus}</p>
                     </ListGroup.Item>
                       )}) : <p>There are currently no services scheduled for this vehicle.</p> 

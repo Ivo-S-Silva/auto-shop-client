@@ -1,13 +1,16 @@
 import axios from 'axios';
-import React, { useState } from 'react'
-import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import React, { useContext, useState } from 'react'
+import { Button, Col, Form, Row } from 'react-bootstrap'
+import { useNavigate, useParams } from 'react-router-dom';
+import { AuthContext } from '../../context/auth.context';
 
 function AddServicePage() {
     const {carId} = useParams();
 
   const [serviceDate, setServiceDate] = useState('');
   const [serviceDetails, setServiceDetails] = useState('');
+
+  const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
   
@@ -22,7 +25,7 @@ function AddServicePage() {
     const storedToken = localStorage.getItem('authToken');
 
 
-    axios.post(`${process.env.REACT_APP_API_URL}/cars/${carId}/services`, newService, {headers: {Authorization: `Bearer ${storedToken}`}})
+    axios.post(`${process.env.REACT_APP_API_URL}/cars/${carId}/services`, newService, {headers: {Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id}})
       .then(() => {
         setServiceDate('');
         setServiceDetails('');
@@ -68,7 +71,7 @@ function AddServicePage() {
           />
         </Form.Group>
 
-        <Button variant="secondary" type="submit">
+        <Button variant="danger" type="submit">
           Submit
         </Button>
       </Form>

@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap';
 import { useNavigate, useParams} from 'react-router-dom'
+import { AuthContext } from '../../context/auth.context';
 
 function EditCarPage() {
     const {carId} = useParams();
@@ -15,11 +16,12 @@ function EditCarPage() {
     const [errorMessage, setErrorMessage] = useState('');
 
     const storedToken = localStorage.getItem('authToken');
+    const { user } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/cars/${carId}`, {headers: { Authorization: `Bearer ${storedToken}` }})
+    axios.get(`${process.env.REACT_APP_API_URL}/cars/${carId}`, {headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }})
     .then(response => {
       setBrand(response.data.brand)
       setModel(response.data.model)
@@ -62,7 +64,7 @@ async function defineImage() {
             licensePlate,
             imageUrl: response
         }
-        return axios.put(`${process.env.REACT_APP_API_URL}/cars/${carId}`, newCarDetails, {headers: { Authorization: `Bearer ${storedToken}` }})
+        return axios.put(`${process.env.REACT_APP_API_URL}/cars/${carId}`, newCarDetails, {headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }})
       })  
         .then((response) => {
             navigate(`/home/cars/${carId}`);

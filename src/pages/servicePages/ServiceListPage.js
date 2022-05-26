@@ -5,16 +5,8 @@ import { Link } from 'react-router-dom';
 
 function ServiceListPage(props) {
     const [cars, setCars] = useState([]);
-    const [services, setservices] = useState([]);
 
     const storedToken = localStorage.getItem('authToken');
-
-const storeServiceList = (cars) => {
-  cars.map(car => {
-    setservices(services => services.concat(car.services));
-  })
-}
-
 
 useEffect(() => {
     axios
@@ -22,10 +14,7 @@ useEffect(() => {
       headers: { Authorization: `Bearer ${storedToken}` },
     })
     .then((response) => {
-       return setCars(response.data)
-    })
-    .then(() => {
-      storeServiceList(cars)
+       setCars(response.data)
     })
     .catch((error) =>
       console.log(
@@ -53,7 +42,7 @@ useEffect(() => {
         {cars.map(car => {
                     return (
                         <>  
-                            {car.services.map(service => {
+                            {car.services ? car.services.map(service => {
                                return (
                                     <tr key={service._id}>
                                       <td className='col-1'><Button variant='danger' href={`/home/clients/${car.owner}`}>Owner</Button></td>
@@ -65,7 +54,7 @@ useEffect(() => {
                                       <td>{service.serviceStatus}</td>
                                     </tr>
                                 )
-                            })}
+                            }) : <h1>There are currently no services Scheduled.</h1>}
                         </>
                         )
                 })}

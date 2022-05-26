@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap'
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { AuthContext } from '../../context/auth.context';
 
 function AddCarPage() {
   const {clientId} = useParams();
@@ -13,6 +14,7 @@ function AddCarPage() {
 
   const [errorMessage, setErrorMessage] = useState('');
   const [clients, fetchClientList] = useOutletContext();
+  const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
   
@@ -39,7 +41,7 @@ function AddCarPage() {
         imageUrl: response.data.secure_url
       }
 
-      return axios.post(`${process.env.REACT_APP_API_URL}/clients/${clientId}/cars`, newCar, {headers: {Authorization: `Bearer ${storedToken}`}})
+      return axios.post(`${process.env.REACT_APP_API_URL}/clients/${clientId}/cars`, newCar, {headers: {Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id}})
     })
       .then(response => {
         setBrand('');
