@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card, Col, Container, ListGroup, Modal, Row } from 'react-bootstrap';
-import { Link, useOutletContext, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { AuthContext } from '../context/auth.context';
 
-function CarDetailsPage() {
+function CarDetailsComponent() {
 
 const {carId} = useParams();
+
+const storedToken = localStorage.getItem("authToken");
 
 const [car, setCar] = useState('');
 const [show, setShow] = useState(false);
@@ -12,11 +16,26 @@ const [show, setShow] = useState(false);
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
 
-const [cars] = useOutletContext();
+const [cars, getCarList] = useOutletContext();
+const { user } = useContext(AuthContext);
+const navigate = useNavigate();
 
 useEffect(() => {
   setCar(cars.find(car => car._id == carId))
 }, [carId])
+
+
+const deleteCar = (carId) => {
+  axios.delete(`${process.env.REACT_APP_API_URL}/cars/${carId}`, {
+    headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }
+  })
+  .then(() => {
+    getCarList();
+    navigate('/home/cars')
+  })
+  .catch(error => console.log('There was an error removing the car from the database.', error))
+}
+
 
   return (
     <Container style={{height: "92.7vh", overflowY: "scroll"}}>
@@ -27,10 +46,13 @@ useEffect(() => {
               <Card.Text>License Plate: {car.licensePlate}</Card.Text>
               <Row>
                 <Col>
-                  <Button style={{width: "15vw"}} variant="danger"><Link className='text-light' style={{textDecoration: "none"}} to={`/home/cars/${car._id}/edit`}>Edit Car Information</Link></Button>
+                  <Button style={{width: "12vw"}} variant="danger"><Link className='text-light' style={{textDecoration: "none"}} to={`/home/cars/${car._id}/edit`}>Edit Car Info</Link></Button>
                 </Col>
                 <Col>
-                  <Button style={{width: "15vw"}} variant="danger" onClick={handleShow}>See Services List</Button>
+                  <Button style={{width: "12vw"}} variant="danger" onClick={handleShow}>See Services List</Button>
+                </Col>
+                <Col>
+                  <Button style={{width: "12vw"}} variant="outline-danger" onClick={() => {deleteCar(car._id)}}>Delete Car</Button>
                 </Col>
               </Row>
             </Card.Body>
@@ -65,4 +87,4 @@ useEffect(() => {
   )
 }
 
-export default CarDetailsPage
+export default CarDetailsComponent

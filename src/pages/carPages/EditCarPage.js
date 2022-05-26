@@ -89,7 +89,7 @@ async function defineImage() {
 
   <Form.Group className="mb-3" controlId="formBasicLicensePlate">
     <Form.Label>License Plate</Form.Label>
-    <Form.Control required={true} unique={true} name='license Plate' value={licensePlate} type="text" onChange={e => {setLicensePlate(e.target.value)}} />
+    <Form.Control required={true} unique="true" name='license Plate' value={licensePlate} type="text" onChange={e => {setLicensePlate(e.target.value)}} />
   </Form.Group>
 
   <Form.Group className="mb-3" controlId="formBasicLicensePlate">

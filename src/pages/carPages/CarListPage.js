@@ -1,13 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
+import { AuthContext } from "../../context/auth.context";
 
 function CarListPage() {
   const [cars, setCarList] = useState([]);
   const [currentCar, setCurrentCar] = useState(null);
 
   const storedToken = localStorage.getItem("authToken");
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     getCarList();
@@ -16,7 +18,7 @@ function CarListPage() {
   const getCarList = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/cars`, {
-        headers: { Authorization: `Bearer ${storedToken}` },
+        headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id  },
       })
       .then((response) => {
         let sortedResponse = [...response.data];
@@ -43,7 +45,7 @@ function CarListPage() {
     return cars.map((car) => {
       let carName = car.brand + " " + car.model;
         return (
-          <Row className="pb-1 pt-1 align-items-center border-bottom">
+          <Row key={car._id} className="pb-1 pt-1 align-items-center border-bottom">
             <Col>
               <div style={{height: "100%"}}>{carName.length > 20 ? carName.slice(0, 20) + "..." : carName}</div>
             </Col>
@@ -68,7 +70,7 @@ function CarListPage() {
         {renderCarList()}
       </Col>
       <Col className='col-6'>
-        {currentCar ? <Outlet context={[cars]}/> : <h2 className="mt-5">Select a car to see detailed information.</h2> }
+        {currentCar ? <Outlet context={[cars, getCarList]}/> : <h2 className="mt-5">Select a car to see detailed information.</h2> }
       </Col>
     </Row>
     </>
