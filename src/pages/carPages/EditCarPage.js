@@ -77,7 +77,7 @@ async function defineImage() {
     }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="mt-3">
     {errorMessage && <Alert key={'danger'} variant={'danger'}>{errorMessage}</Alert>}
   <Form.Group className="mb-3" controlId="formBasicBrand">
     <Form.Label>Brand:</Form.Label>

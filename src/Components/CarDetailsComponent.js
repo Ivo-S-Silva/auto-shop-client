@@ -10,19 +10,20 @@ const {carId} = useParams();
 
 const storedToken = localStorage.getItem("authToken");
 
-const [car, setCar] = useState('');
+const [car, setCar] = useState(null);
 const [show, setShow] = useState(false);
 
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
 
-const [cars, getCarList] = useOutletContext();
+const [carList, getCarList] = useOutletContext();
 const { user } = useContext(AuthContext);
 const navigate = useNavigate();
 
+
 useEffect(() => {
-  setCar(cars.find(car => car._id == carId))
-}, [carId, cars])
+  setCar(carList.find(car => car._id == carId))
+}, [carId, carList])
 
 
 const deleteCar = (carId) => {
@@ -37,7 +38,7 @@ const deleteCar = (carId) => {
 }
 
 
-  return (
+  return (car ?
     <Container style={{height: "92.7vh", overflowY: "scroll"}}>
           <Card className='mt-5'>
             <Card.Img variant="top" src={`${car.imageUrl}`}/>
@@ -83,7 +84,7 @@ const deleteCar = (carId) => {
             </ListGroup>
             </Modal.Body>
           </Modal>
-    </Container>
+    </Container> : <h1>Loading Car Information</h1>
   )
 }
 

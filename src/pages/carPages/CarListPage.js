@@ -5,7 +5,7 @@ import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 
 function CarListPage() {
-  const [cars, setCarList] = useState([]);
+  const [cars, setCarList] = useState(null);
   const [currentCar, setCurrentCar] = useState(null);
 
   const storedToken = localStorage.getItem("authToken");
@@ -21,6 +21,7 @@ function CarListPage() {
         headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id  },
       })
       .then((response) => {
+        if(response.data.length >= 1) {
         let sortedResponse = [...response.data];
 
         sortedResponse.sort((x,y) => {
@@ -32,6 +33,7 @@ function CarListPage() {
         })
 
         setCarList(sortedResponse);
+      }
       })
       .catch((error) =>
         console.log(
@@ -67,7 +69,7 @@ function CarListPage() {
     <><Row style={{width: '100%'}}>
       <Col className='col-6' style={{height: "92.7vh", overflowY: "scroll", backgroundColor: "#d6d6d6"}}>
         <div className="mt-1"></div>
-        {renderCarList()}
+        {cars ? renderCarList() : <h2 className='mt-5'>There are no cars currently registered.</h2>}
       </Col>
       <Col className='col-6'>
         {currentCar ? <Outlet context={[cars, getCarList]}/> : <h2 className="mt-5">Select a car to see detailed information.</h2> }

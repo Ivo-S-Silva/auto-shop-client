@@ -42,7 +42,7 @@ useEffect(() => {
         {cars.map(car => {
                     return (
                         <>  
-                            {car.services ? car.services.map(service => {
+                            {car.services.length >= 1 ? car.services.map(service => {
                                return (
                                     <tr key={service._id}>
                                       <td className='col-1'><Button variant='danger' href={`/home/clients/${car.owner}`}>Owner</Button></td>
