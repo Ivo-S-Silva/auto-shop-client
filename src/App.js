@@ -12,7 +12,7 @@ import NavbarComponent from './Components/NavbarComponent';
 import CarListPage from './pages/carPages/CarListPage';
 import AddCarPage from './pages/carPages/AddCarPage';
 import EditCarPage from './pages/carPages/EditCarPage';
-import CarDetailsPage from './pages/carPages/CarDetailsPage';
+import CarDetailsPage from './Components/CarDetailsComponent';
 import ServiceListPage from './pages/servicePages/ServiceListPage';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
@@ -38,8 +38,9 @@ function App() {
         <Route path='clients/:clientId/edit' element={<IsPrivate><EditClientPage/></IsPrivate>}></Route>
         <Route path='clients/:clientId/cars/new' element={<IsPrivate><AddCarPage/></IsPrivate>}></Route>
 
-        <Route path='cars' element={<IsPrivate><CarListPage/></IsPrivate>}></Route>
-        <Route path='cars/:carId' element={<IsPrivate><CarDetailsPage/></IsPrivate>}></Route>
+        <Route path='cars/*' element={<IsPrivate><CarListPage/></IsPrivate>}>
+          <Route path=':carId' element={<IsPrivate><CarDetailsPage/></IsPrivate>}></Route>
+        </Route>
         <Route path='cars/:carId/edit' element={<IsPrivate><EditCarPage/></IsPrivate>}></Route>
         <Route path='services' element={<IsPrivate><ServiceListPage/></IsPrivate>}></Route>
         <Route path='cars/:carId/new-service' element={<IsPrivate><AddServicePage/></IsPrivate>}></Route>

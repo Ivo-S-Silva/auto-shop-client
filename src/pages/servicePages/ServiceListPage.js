@@ -56,8 +56,8 @@ useEffect(() => {
                             {car.services.map(service => {
                                return (
                                     <tr key={service._id}>
-                                      <td className='col-1'><Button variant='secondary' href={`/home/clients/${car.owner}`}>Owner</Button></td>
-                                      <td className='col-1'><Button variant='secondary' href={`/home/cars/${car._id}`}>Service</Button></td>
+                                      <td className='col-1'><Button variant='danger' href={`/home/clients/${car.owner}`}>Owner</Button></td>
+                                      <td className='col-1'><Button variant='danger' href={`/home/cars/${car._id}`}>Service</Button></td>
                                       <td>{car.brand}</td>
                                       <td>{car.model}</td>
                                       <td>{`${service.serviceDetails.slice(0, 60)}...`}</td>

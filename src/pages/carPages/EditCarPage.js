@@ -10,6 +10,7 @@ function EditCarPage() {
     const [brand, setBrand] = useState(null);
     const [model, setModel] = useState(null);
     const [licensePlate, setLicensePlate] = useState(null);
+    const [image, setImage] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
 
     const storedToken = localStorage.getItem('authToken');
@@ -22,6 +23,7 @@ function EditCarPage() {
       setBrand(response.data.brand)
       setModel(response.data.model)
       setLicensePlate(response.data.licensePlate)
+      setImage(response.data.imageUrl)
     })
     .catch(error => console.log('There was an error getting the car information from the database', error))
   }, [])
@@ -30,14 +32,25 @@ function EditCarPage() {
     const handleSubmit = (e) => {
       e.preventDefault();
 
+      const data = new FormData()
+      data.append("file", image)  
+      data.append("upload_preset", "standard")
+
+      axios.post("  https://api.cloudinary.com/v1_1/dq8uzmgrq/image/upload", data, {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+      })
+      .then(response => {
+
         const newCarDetails = {
             brand,
             model,
-            licensePlate
+            licensePlate,
+            imageUrl: response.data.secure_url
         }
 
-        axios.put(`${process.env.REACT_APP_API_URL}/cars/${carId}`, newCarDetails, {headers: { Authorization: `Bearer ${storedToken}` }})
-          .then((response) => {
+        return axios.put(`${process.env.REACT_APP_API_URL}/cars/${carId}`, newCarDetails, {headers: { Authorization: `Bearer ${storedToken}` }})
+      })  
+        .then((response) => {
             navigate(`/home/cars/${carId}`);
           })
           .catch(error => {
@@ -63,6 +76,11 @@ function EditCarPage() {
   <Form.Group className="mb-3" controlId="formBasicLicensePlate">
     <Form.Label>License Plate</Form.Label>
     <Form.Control required={true} unique={true} name='license Plate' value={licensePlate} type="text" onChange={e => {setLicensePlate(e.target.value)}} />
+  </Form.Group>
+
+  <Form.Group className="mb-3" controlId="formBasicLicensePlate">
+    <Form.Label>Image:</Form.Label>
+    <Form.Control name='car-image' type="file" onChange={e => {setImage(e.target.files[0])}}/>
   </Form.Group>
 
   <Button variant="secondary" type="submit">

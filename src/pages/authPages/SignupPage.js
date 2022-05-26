@@ -27,7 +27,7 @@ const handleSignupSubmit = (e) => {
 
   return (
 <Container fluid>
-      <Row className="align-items-center" style={{ height: "100vh" }}>
+      <Row className="align-items-center" style={{ height: "90vh" }}>
         <Col>
             <h1>Welcome</h1>
             <p>Placeholder Text</p>

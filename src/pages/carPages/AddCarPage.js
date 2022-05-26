@@ -4,11 +4,13 @@ import { Alert, Button, Form } from 'react-bootstrap'
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 
 function AddCarPage() {
-    const {clientId} = useParams();
+  const {clientId} = useParams();
 
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
-  const [licensePlate, setLicensePlate] = useState('')
+  const [licensePlate, setLicensePlate] = useState('');
+  const [image, setImage] = useState('');
+
   const [errorMessage, setErrorMessage] = useState('');
   const [clients, fetchClientList] = useOutletContext();
 
@@ -17,16 +19,28 @@ function AddCarPage() {
   const handleSubmit = (e) => {
    e.preventDefault();
 
-    const newCar = {
-      brand,
-      model,
-      licensePlate
-    }
-
     const storedToken = localStorage.getItem('authToken');
 
+    const data = new FormData()
+    data.append("file", image)  
+    data.append("upload_preset", "standard")
+    
+    
 
-    axios.post(`${process.env.REACT_APP_API_URL}/clients/${clientId}/cars`, newCar, {headers: {Authorization: `Bearer ${storedToken}`}})
+    axios.post("  https://api.cloudinary.com/v1_1/dq8uzmgrq/image/upload", data, {
+      headers: { "X-Requested-With": "XMLHttpRequest" },
+    })
+    .then(response => {
+
+      const newCar = {
+        brand,
+        model,
+        licensePlate,
+        imageUrl: response.data.secure_url
+      }
+
+      return axios.post(`${process.env.REACT_APP_API_URL}/clients/${clientId}/cars`, newCar, {headers: {Authorization: `Bearer ${storedToken}`}})
+    })
       .then(response => {
         setBrand('');
         setModel('');
@@ -57,6 +71,11 @@ function AddCarPage() {
   <Form.Group className="mb-3" controlId="formBasicLicensePlate">
     <Form.Label>License Plate:</Form.Label>
     <Form.Control required={true} name='licensePlate' value={licensePlate} type="text" placeholder="Enter license plate" onChange={e => {setLicensePlate(e.target.value)}} />
+  </Form.Group>
+
+  <Form.Group className="mb-3" controlId="formBasicLicensePlate">
+    <Form.Label>Image:</Form.Label>
+    <Form.Control name='car-image' type="file" onChange={e => {setImage(e.target.files[0])}}/>
   </Form.Group>
 
   <Button variant="secondary" type="submit">

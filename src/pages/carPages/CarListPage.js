@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Button, Col, Row } from "react-bootstrap";
+import { Link, Outlet } from "react-router-dom";
 
 function CarListPage() {
   const [cars, setCarList] = useState([]);
+  const [currentCar, setCurrentCar] = useState(null);
 
-  const storedToken = localStorage.getItem('authToken');
+  const storedToken = localStorage.getItem("authToken");
 
   useEffect(() => {
     getCarList();
@@ -16,7 +18,19 @@ function CarListPage() {
       .get(`${process.env.REACT_APP_API_URL}/cars`, {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
-      .then((response) => setCarList(response.data))
+      .then((response) => {
+        let sortedResponse = [...response.data];
+
+        sortedResponse.sort((x,y) => {
+          let n = x.brand - y.brand;
+          if (n !== 0) {
+            return n;
+          }
+          return x.model - y.model;
+        })
+
+        setCarList(sortedResponse);
+      })
       .catch((error) =>
         console.log(
           "There was an error getting the car list from the database.",
@@ -25,20 +39,38 @@ function CarListPage() {
       );
   };
 
+  const renderCarList = (page) => {    
+    return cars.map((car) => {
+      let carName = car.brand + " " + car.model;
+        return (
+          <Row className="pb-1 pt-1 align-items-center border-bottom">
+            <Col>
+              <div style={{height: "100%"}}>{carName.length > 20 ? carName.slice(0, 20) + "..." : carName}</div>
+            </Col>
+            <Col className='col-2'>
+              <div style={{height: "100%"}}>{car.licensePlate}</div>
+            </Col>
+            <Col className='col-2'>
+              <Button className='mt-0' variant="danger"><Link className='text-light' style={{textDecoration: "none"}} to={`/home/clients/${car.owner}`}>Owner</Link></Button>
+            </Col>
+            <Col className='col-3'>
+              <Button className='mt-0' variant="danger" onClick={() => setCurrentCar(car)}><Link className='text-light' style={{textDecoration: "none"}} to={`/home/cars/${car._id}`}>Car Details</Link></Button>
+            </Col>
+          </Row>
+        );
+      })
+  }
+
   return (
-    <>
-        {cars && 
-            <>
-                {cars.map(car => {
-                    return (
-                    <>
-                        <h1>{car.brand}, {car.model}, {car.licensePlate}</h1>
-                        <Link to={`/home/clients/${car.owner}`}>Go to Owner Page</Link>
-                        <Link to={`/home/cars/${car._id}`}>Go to Car details Page</Link>
-                    </>)
-                })}
-            </>
-        }
+    <><Row style={{width: '100%'}}>
+      <Col className='col-6' style={{height: "92.7vh", overflowY: "scroll", backgroundColor: "#d6d6d6"}}>
+        <div className="mt-1"></div>
+        {renderCarList()}
+      </Col>
+      <Col className='col-6'>
+        {currentCar ? <Outlet context={[cars]}/> : <h2 className="mt-5">Select a car to see detailed information.</h2> }
+      </Col>
+    </Row>
     </>
   );
 }

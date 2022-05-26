@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import {Navigate, Link, useNavigate } from "react-router-dom";
+import {Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
 
@@ -8,8 +8,6 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
-  const navigate = useNavigate();
 
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
@@ -25,7 +23,6 @@ function LoginPage() {
       .then((response) => {
         storeToken(response.data.authToken)
         authenticateUser()
-        navigate('/home')
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
@@ -36,7 +33,7 @@ function LoginPage() {
 
   return (
     <Container fluid>
-      <Row className="align-items-center" style={{ height: "100vh" }}>
+      <Row className="align-items-center" style={{ height: "90vh" }}>
         <Col>
             <h1>Welcome</h1>
             <p>Placeholder Text</p>

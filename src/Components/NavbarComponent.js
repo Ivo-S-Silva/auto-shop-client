@@ -10,12 +10,12 @@ function NavbarComponent() {
 const renderNavbar = () => {
    return isLoggedIn && 
     <>
-          <Nav className="me-auto">
+          <Nav className="me-auto" style={{height: "5vh", width: "100vh"}}>
           <NavDropdown title="Clients" id="nav-clients-dropdown">
             <NavDropdown.Item><NavLink to='/home/clients' className='text-dark' style={{textDecoration: "none"}}>Client List</NavLink></NavDropdown.Item>
             <NavDropdown.Item><NavLink to='/home/clients/create' className='text-dark' style={{textDecoration: "none"}}>Add New Client</NavLink></NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link href='/home/cars'>Car List</Nav.Link>
+          <Nav.Link href='/home/cars/list'>Car List</Nav.Link>
           <Nav.Link href='/home/services'>Service List</Nav.Link>
           </Nav>
           <Nav>
