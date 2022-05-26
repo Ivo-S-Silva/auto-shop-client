@@ -33,7 +33,7 @@ const renderCarDetails = () => {
                   <Button style={{width: "12vw"}} variant="danger"><Link className='text-light' style={{textDecoration: "none"}} to={`/home/cars/${currentCar._id}/edit`}>Edit Car Info</Link></Button>
                 </Col>
                 <Col>
-                  <Button style={{width: "12vw"}} variant="danger" onClick={handleShow}>See Services List</Button>
+                  <Button style={{width: "12vw"}} variant="danger" onClick={handleShow}>Services</Button>
                 </Col>
                 <Col>
                   <Button style={{width: "12vw"}} variant="outline-danger" onClick={() => {deleteCar(currentCar._id)}}>Delete Car</Button>

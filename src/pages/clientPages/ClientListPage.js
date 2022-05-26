@@ -1,52 +1,54 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
-import { Table } from 'react-bootstrap';
-import { Link, useOutletContext } from 'react-router-dom';
-
+import React from "react";
+import { Table, Button } from "react-bootstrap";
+import { useOutletContext } from "react-router-dom";
 
 function ClientListPage() {
+  const [clients] = useOutletContext();
 
-    const [clients] = useOutletContext();
+  const numberOfServices = (cars) => {
+    let servicesTotal = 0;
 
-    const numberOfServices = (cars) => {
-        let servicesTotal = 0;
+    cars.forEach((car) => {
+      servicesTotal = servicesTotal + car.services.length;
+    });
 
-        cars.forEach(car => {
-            servicesTotal = servicesTotal + car.services.length;
-        })
+    return servicesTotal;
+  };
 
-        return servicesTotal;
-    }
-
-
-    const renderClientList = () => {
-      return clients.map(client => {
-        return(
-            <tr>
-                <td><Link to={`/home/clients/${client._id}`} >{client.name}</Link></td>
-                <td>{client.cars.length}</td>
-                <td>{numberOfServices(client.cars)}</td>
-            </tr>
-        )
-      })
-    }
+  const renderClientList = () => {
+    return clients.map((client) => {
+      return (
+        <tr key={client._id}>
+          <td className="col-1">
+            <Button variant="danger" href={`/home/clients/${client._id}`}>
+              Profile
+            </Button>
+          </td>
+          <td className="pt-3">{client.name}</td>
+          <td className="pt-3">{client.cars.length}</td>
+          <td className="pt-3">{numberOfServices(client.cars)}</td>
+        </tr>
+      );
+    });
+  };
 
   return (
     <>
-        <Table>
-            <thead>
-                <tr>
-                    <th>Client Name</th>
-                    <th>Number of Cars</th>
-                    <th>Number of Services</th>
-                </tr>
-            </thead>
-            <tbody>
-                {clients === null ? <p>Loading...</p> : renderClientList()}
-            </tbody>
-        </Table>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Client Name</th>
+            <th>Number of Cars</th>
+            <th>Number of Services</th>
+          </tr>
+        </thead>
+        <tbody>
+          {clients === null ? <p>Loading...</p> : renderClientList()}
+        </tbody>
+      </Table>
     </>
-  )
+  );
 }
 
 export default ClientListPage;

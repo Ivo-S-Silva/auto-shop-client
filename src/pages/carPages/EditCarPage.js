@@ -99,7 +99,7 @@ async function defineImage() {
     <Form.Control name='car-image' type="file" onChange={e => {setImage(e.target.files[0])}}/>
   </Form.Group>
 
-  <Button variant="secondary" type="submit">
+  <Button variant="danger" type="submit">
     Submit
   </Button>
 </Form>

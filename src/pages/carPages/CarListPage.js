@@ -25,11 +25,9 @@ function CarListPage() {
         let sortedResponse = [...response.data];
 
         sortedResponse.sort((x,y) => {
-          let n = x.brand - y.brand;
-          if (n !== 0) {
-            return n;
-          }
-          return x.model - y.model;
+            if(x.brand > y.brand) return 1;
+            if(y.brand > x.brand) return -1;
+            return x.model - y.model;
         })
 
         setCarList(sortedResponse);

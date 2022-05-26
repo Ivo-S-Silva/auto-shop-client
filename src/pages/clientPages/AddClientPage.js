@@ -53,7 +53,7 @@ function AddClientPage(props) {
     <Form.Control required={true} name='fiscalNumber' value={fiscalNumber} type="Number" placeholder="Fiscal Number" onChange={e => {setFiscalNumber(e.target.value)}} />
   </Form.Group>
 
-  <Button variant="secondary" type="submit">
+  <Button variant="danger" type="submit">
     Submit
   </Button>
 </Form>

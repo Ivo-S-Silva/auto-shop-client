@@ -42,7 +42,7 @@ useEffect(() => {
         {cars.map(car => {
                     return (
                         <>  
-                            {car.services.length >= 1 ? car.services.map(service => {
+                            {car.services.map(service => {
                                return (
                                     <tr key={service._id}>
                                       <td className='col-1'><Button variant='danger' href={`/home/clients/${car.owner}`}>Owner</Button></td>
@@ -54,7 +54,7 @@ useEffect(() => {
                                       <td>{service.serviceStatus}</td>
                                     </tr>
                                 )
-                            }) : <h1>There are currently no services Scheduled.</h1>}
+                            })}
                         </>
                         )
                 })}

@@ -53,7 +53,7 @@ function EditClientPage(props) {
     <Form.Control required={true} name='fiscalNumber' value={fiscalNumber} type="Number" onChange={e => {setFiscalNumber(e.target.value)}} />
   </Form.Group>
 
-  <Button variant="secondary" type="submit">
+  <Button variant="danger" type="submit">
     Submit
   </Button>
 </Form>
