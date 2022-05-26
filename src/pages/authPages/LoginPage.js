@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
 
@@ -22,10 +22,8 @@ function LoginPage() {
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, requestBody)
       .then((response) => {
         storeToken(response.data.authToken)
-        return authenticateUser()
-      })
-      .then(() => {
-        navigate();
+        authenticateUser()
+        return <Navigate to="/home" />
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
