@@ -81,7 +81,7 @@ const deleteService = () => {
                 <Card.Title>Service Status: 
                   {service.serviceStatus}
                 </Card.Title>
-                <Card.Text className="mt-5 d-flex justify-content-center" style={{width: '50vw'}}>
+                <Card.Text className="mt-5 d-flex justify-content-center" style={{width: '50vw', whiteSpace: 'pre-line'}}>
                 {service.serviceDetails}
                 </Card.Text>
               </Card.Body>
