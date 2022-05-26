@@ -53,7 +53,7 @@ function CarListPage() {
     .catch(error => console.log('There was an error removing the car from the database.', error))
   }
 
-  const renderCarList = (page) => {    
+  const renderCarList = () => {    
     return cars.map((car) => {
       let carName = car.brand + " " + car.model;
         return (

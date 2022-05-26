@@ -2,7 +2,7 @@ import axios from "axios";
 import { Tab } from "bootstrap";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, Col, Row, Tabs } from "react-bootstrap";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 
 function ServiceDetailsPage() {
@@ -76,10 +76,10 @@ const deleteService = () => {
               <Card.Body className="d-flex flex-column justify-content-center align-items-center">
                 <h2>Service Description</h2>
                 <Card.Title>Service Date: 
-                  {service.serviceDate.substr(
-                    0,
-                    service.serviceDate.indexOf("T")
-                  )}
+                  {service.serviceDate.substr(0,service.serviceDate.indexOf("T"))}
+                </Card.Title>
+                <Card.Title>Service Status: 
+                  {service.serviceStatus}
                 </Card.Title>
                 <Card.Text className="mt-5 d-flex justify-content-center" style={{width: '50vw'}}>
                 {service.serviceDetails}

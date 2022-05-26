@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap';
-import { Navigate, useNavigate, useOutletContext, useParams} from 'react-router-dom'
+import { useNavigate, useOutletContext, useParams} from 'react-router-dom'
 import { AuthContext } from '../../context/auth.context';
 
 function EditCarPage() {

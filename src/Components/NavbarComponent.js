@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import logo from "../assets/images/logo-image.png";
 
 function NavbarComponent() {
 
@@ -32,7 +33,7 @@ const renderNavbar = () => {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        {!isLoggedIn ? <Navbar.Brand href='/'>Auto-Shop</Navbar.Brand> : <Navbar.Brand href='/home'>Auto-Shop</Navbar.Brand> }
+        {!isLoggedIn ? <Navbar.Brand href='/'><img src={logo} width='30' height='30' className="d-inline-block align-top" alt="Auto-Shop Logo"/> Auto-Shop</Navbar.Brand> : <Navbar.Brand href='/home'><img src={logo} width='30' height='30' className="d-inline-block align-top" alt="Auto-Shop Logo"/> Auto-Shop</Navbar.Brand> }
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           {renderNavbar()}

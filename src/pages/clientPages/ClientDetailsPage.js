@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Col, Row, Table } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 
@@ -25,35 +25,73 @@ function ClientDetailsPage() {
     });
   }, [])
   
+  const renderCarList = () => {
+    return client.cars.map(car => {
+      let carName = car.brand + " " + car.model;
+      return(
+        <tr>
+          <td>
+            <Link to={`/home/cars/${car._id}`}>{carName}</Link>
+          </td>
+          <td>
+            {car.licensePlate}
+          </td>
+          <td>
+            {car.services.length}
+          </td>
+        </tr>
+      )
+    })
+  }
 
   return (
+    <Row className="col-12 mt-3">
+    <Col className="col-2"></Col>
+    <Col className="col-8" style={{ backgroundColor: "#f2f2f2" }}>
     <>
       {!client ? (
         <h1>Loading...</h1>
       ) : (
         <>
-          <h1>Name: {client.name}</h1>
-          <h2>Fiscal Number: {client.fiscalNumber}</h2>
-          <Button><Link to={`/home/clients/${clientId}/edit`} className='text-light' style={{textDecoration: "none"}}>Edit Client Info</Link></Button>
-          <h2>Cars owned:</h2>
-          <table>
-            {client.cars ? client.cars.map(car => {
-              return(
-                <tr>
-                <td>
-                <Link to={`/home/cars/${car._id}`}>{car.brand}, {car.model}</Link>
-                </td>
-                <td>
-                  Services: {car.services.length}
-                </td>
-                </tr>
-              )
-            }) : <h3>Client has no registered cars.</h3>}
-          </table>
-          <Button><Link to={`/home/clients/${clientId}/cars/new`} className='text-light' style={{textDecoration: "none"}}>Add New Car</Link></Button>
+        <Row className="mt-3">
+        <Col>
+          <h2>Name</h2>
+          <h3>{client.name}</h3>
+        </Col>
+        <Col>
+          <h2>Fiscal Number</h2>
+          <h3>{client.fiscalNumber}</h3>
+        </Col>
+        </Row>
+        <Button className='mt-4' variant="danger"><Link to={`/home/clients/${clientId}/edit`} className='text-light' style={{textDecoration: "none"}}>Edit Client Info</Link></Button>
+          
+          <Row className="d-flex flex-row justify-content-between align-content-center">
+            <h2 className="pt-1" style={{ width: '15vw', height: "100%"}}>Cars owned:</h2>
+            <div className="d-flex justify-content-center" style={{ width: '15vw' }}>
+              <Button className='mt-0 pr-5' style={{ width: '10vw' }} variant="danger"><Link to={`/home/clients/${clientId}/cars/new`} className='text-light' style={{textDecoration: "none"}}>Add New Car</Link></Button>
+            </div>
+          </Row>
+          
+          <Table striped bordered hover className="mt-4">
+            <thead>
+              <tr>
+                <th>Car Brand, Model</th>
+                <th>License Plate</th>
+                <th>Number of Services</th>
+              </tr>
+            </thead>
+            <tbody>
+              {client.cars ? renderCarList() : <h3>Client has no registered cars.</h3>}
+            </tbody>
+          </Table>
         </>
       )}
     </>
+    </Col>
+    <Col className="col-2"></Col>
+  </Row>
+
+
   );
 }
 

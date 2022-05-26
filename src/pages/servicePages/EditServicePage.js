@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 
 function EditServicePage() {
@@ -9,6 +9,7 @@ function EditServicePage() {
 
   const [serviceDate, setServiceDate] = useState('');
   const [serviceDetails, setServiceDetails] = useState('');
+  const [serviceStatus, setServiceStatus] = useState('');
 
   const { user } = useContext(AuthContext);
   const storedToken = localStorage.getItem('authToken');
@@ -23,6 +24,7 @@ function EditServicePage() {
 
       setServiceDate(serviceFound.serviceDate.substr(0, serviceFound.serviceDate.indexOf('T')))
       setServiceDetails(serviceFound.serviceDetails)
+      setServiceStatus(serviceFound.serviceStatus)
     })
     .catch(error => console.log('There was an error getting the car information from the database', error))
   }, [])
@@ -32,17 +34,19 @@ function EditServicePage() {
  
      const newServiceDetails = {
        serviceDate,
-       serviceDetails
+       serviceDetails,
+       serviceStatus
      }
 
      axios.put(`${process.env.REACT_APP_API_URL}/cars/${carId}/${serviceId}`, newServiceDetails, {headers: {Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id}})
       .then(() => {
         setServiceDate('');
         setServiceDetails('');
-        return <Navigate to={`/home/cars/${carId}`}/>
+        setServiceStatus('');
+        navigate(`/home/cars/${carId}/${serviceId}`)
       })
       .catch(error => {
-        console.log('There was an error creating new service', error)
+        console.log('There was an error editing the service details.', error)
       });
     }
 
@@ -80,6 +84,14 @@ function EditServicePage() {
             }}
           />
         </Form.Group>
+
+        <Form.Select name='serviceStatus' className='mb-3' aria-label="Default select example" onChange={(e) => {e.target.value && setServiceStatus(e.target.value)}}>
+            <option>Select Service Status</option>
+            <option value="Waiting">Waiting</option>
+            <option value="On Shop">On Shop</option>
+            <option value="Ready To Deliver">Ready To Deliver</option>
+            <option value="Delivered">Delivered</option>
+        </Form.Select>
 
         <Button className='mb-3' variant="danger" type="submit">
           Submit

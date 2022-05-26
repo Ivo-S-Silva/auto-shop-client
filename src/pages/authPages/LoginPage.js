@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
 
@@ -34,14 +34,13 @@ function LoginPage() {
 
   return (
     <Container fluid>
-      <Row className="align-items-center" style={{ height: "90vh" }}>
-        <Col>
-            <h1>Welcome</h1>
-            <p>Placeholder Text</p>
-        </Col>
-        <Col className="d-flex justify-content-center align-items-center" style={{ minHeight: "55vh", maxHeight: "auto"}}>
+    <video autoPlay muted loop id="backgroundVideo" style={{position: "fixed", right: 0, bottom: 0, maxWidth: "100%", maxHeight: "100%", zIndex: -1}}>
+      <source src="https://res.cloudinary.com/dq8uzmgrq/video/upload/v1653586496/production_ID_4482068_1_gxtjbn.mp4" type="video/mp4"></source>
+    </video>
+      <Row className="align-items-center col-12" style={{ height: "90vh" }}>
+        <Col className="d-flex justify-content-center align-items-center col-6" style={{ minHeight: "55vh", maxHeight: "auto"}}>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <Form onSubmit={handleLoginSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", minHeight: "55vh", maxHeight: "auto", backgroundColor: "#8AA29E", borderRadius: "25px"}}>
+          <Form onSubmit={handleLoginSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", minHeight: "55vh", maxHeight: "auto", backgroundColor: "#f2f2f2", borderRadius: "25px"}}>
             <h1 className="mb-2 mt-2">Please Login</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
@@ -56,6 +55,8 @@ function LoginPage() {
             <p className="mt-4">Need an account? <Link to={"/signup"}>Sign Up</Link></p>
           </Form>
 
+        </Col>
+        <Col>
         </Col>
       </Row>
     </Container>

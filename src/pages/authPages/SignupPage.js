@@ -27,13 +27,12 @@ const handleSignupSubmit = (e) => {
 
   return (
 <Container fluid>
+  <video autoPlay muted loop id="backgroundVideo" style={{position: "fixed", right: 0, bottom: 0, maxWidth: "100%", maxHeight: "100%", zIndex: -1}}>
+      <source src="https://res.cloudinary.com/dq8uzmgrq/video/upload/v1653586496/production_ID_4482068_1_gxtjbn.mp4" type="video/mp4"></source>
+    </video>
       <Row className="align-items-center" style={{ height: "90vh" }}>
-        <Col>
-            <h1>Welcome</h1>
-            <p>Placeholder Text</p>
-        </Col>
         <Col className="d-flex justify-content-center align-items-center" style={{ minHeight: "55vh", maxHeight: "auto"}}>
-          <Form onSubmit={handleSignupSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", minHeight: "55vh", maxHeight: "auto", backgroundColor: "#8AA29E", borderRadius: "25px"}}>
+          <Form onSubmit={handleSignupSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", minHeight: "55vh", maxHeight: "auto", backgroundColor: "#f2f2f2", borderRadius: "25px"}}>
             <h1 className="mb-2 mt-2">Please Register</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               {errorMessage && <Alert key={'danger'} variant={'danger'}>{errorMessage}</Alert>}
@@ -49,6 +48,8 @@ const handleSignupSubmit = (e) => {
             <p className="mt-4">Already have an account? <Link to={"/login"}>Login</Link></p>
           </Form>
 
+        </Col>
+        <Col>
         </Col>
       </Row>
     </Container>

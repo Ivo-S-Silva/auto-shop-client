@@ -1,8 +1,6 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, ListGroup, Modal, Row } from 'react-bootstrap';
-import { Link, useNavigate, useOutletContext, useParams } from 'react-router-dom';
-import { AuthContext } from '../../context/auth.context';
+import { Link,  useOutletContext, useParams } from 'react-router-dom';
 
 function CarDetailsPage() {
 
@@ -17,7 +15,6 @@ const handleShow = () => setShow(true);
 const [carList, getCarList, deleteCar] = useOutletContext();
 
 useEffect(() => {
-  console.log(carId)
   const foundCar = carList.find(car => car._id == carId);
   setSelectedCar(foundCar);
 }, [carId])
