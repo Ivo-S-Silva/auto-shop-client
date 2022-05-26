@@ -71,8 +71,9 @@ const renderCarDetails = () => {
   )
 }
 
-const deleteCar = (carId) => {
-  axios.delete(`${process.env.REACT_APP_API_URL}/cars/${carId}`, {
+const deleteCar = (carToDelete) => {
+  console.log(carToDelete)
+  axios.delete(`${process.env.REACT_APP_API_URL}/cars/${carToDelete}`, {
     headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }
   })
   .then(() => {
