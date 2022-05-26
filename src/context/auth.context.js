@@ -40,7 +40,7 @@ function AuthProviderWrapper(props) {
                 setIsLoading(true);
                 setIsLoggedIn(false);
                 setUser(null)
-                navigate('login');
+                navigate('/login');
             });
     } else {
         //If the token is not available or is removed
@@ -58,7 +58,7 @@ function AuthProviderWrapper(props) {
     const logOutUser = () => {   
     removeToken();
     authenticateUser();
-    navigate("/")
+    navigate("/login")
     }  
 
   return (

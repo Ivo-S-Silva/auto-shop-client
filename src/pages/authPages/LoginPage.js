@@ -23,7 +23,7 @@ function LoginPage() {
       .then((response) => {
         storeToken(response.data.authToken)
         authenticateUser()
-        return <Navigate to="/home" />
+        navigate('/home')
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;

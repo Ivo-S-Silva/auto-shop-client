@@ -28,7 +28,7 @@ function App() {
     <NavbarComponent/>
 
     <Routes>
-      <Route path='/' element={<IsPrivate><LandingPage/></IsPrivate>}></Route>
+      <Route path='/' element={<LandingPage/>}></Route>
       <Route path='/home/*' element={<HomePage></HomePage>}>
         <Route index element={<DashboardPage/>}/>
         <Route path='dashboard' element={<IsPrivate><DashboardPage/></IsPrivate>}></Route>
