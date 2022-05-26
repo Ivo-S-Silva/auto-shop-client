@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap'
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
+import carPlaceholder from '../../assets/images/car-placeholder.jpeg';
 
 function AddCarPage() {
   const {clientId} = useParams();
@@ -11,34 +12,45 @@ function AddCarPage() {
   const [model, setModel] = useState('');
   const [licensePlate, setLicensePlate] = useState('');
   const [image, setImage] = useState('');
-
   const [errorMessage, setErrorMessage] = useState('');
+
   const [clients, fetchClientList] = useOutletContext();
   const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
   
+  async function defineImage() {
+    let imageFile;
+  
+    if(image) {
+      const data = new FormData()
+        data.append("file", image)  
+        data.append("upload_preset", "standard")
+  
+        let response = await axios.post("  https://api.cloudinary.com/v1_1/dq8uzmgrq/image/upload", data, {headers: { "X-Requested-With": "XMLHttpRequest" }})
+        imageFile = response.data.secure_url;
+  
+        return imageFile;
+    } else {
+      imageFile = carPlaceholder;
+  
+      return imageFile;
+    }
+  }
+
   const handleSubmit = (e) => {
    e.preventDefault();
 
     const storedToken = localStorage.getItem('authToken');
 
-    const data = new FormData()
-    data.append("file", image)  
-    data.append("upload_preset", "standard")
-    
-    
-
-    axios.post("  https://api.cloudinary.com/v1_1/dq8uzmgrq/image/upload", data, {
-      headers: { "X-Requested-With": "XMLHttpRequest" },
-    })
+    defineImage()
     .then(response => {
 
       const newCar = {
         brand,
         model,
         licensePlate,
-        imageUrl: response.data.secure_url
+        imageUrl: response
       }
 
       return axios.post(`${process.env.REACT_APP_API_URL}/clients/${clientId}/cars`, newCar, {headers: {Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id}})
