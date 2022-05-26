@@ -10,50 +10,33 @@ const {carId} = useParams();
 
 const storedToken = localStorage.getItem("authToken");
 
-const [car, setCar] = useState(null);
 const [show, setShow] = useState(false);
 
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
 
-const [carList, getCarList] = useOutletContext();
+const [carList, getCarList, currentCar] = useOutletContext();
 const { user } = useContext(AuthContext);
 const navigate = useNavigate();
 
 
-useEffect(() => {
-  setCar(carList.find(car => car._id == carId))
-}, [carId, carList])
-
-
-const deleteCar = (carId) => {
-  axios.delete(`${process.env.REACT_APP_API_URL}/cars/${carId}`, {
-    headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }
-  })
-  .then(() => {
-    getCarList();
-    navigate('/home/cars')
-  })
-  .catch(error => console.log('There was an error removing the car from the database.', error))
-}
-
-
-  return (car ?
+const renderCarDetails = () => {
+  return (currentCar ?
     <Container style={{height: "92.7vh", overflowY: "scroll"}}>
           <Card className='mt-5'>
-            <Card.Img variant="top" src={`${car.imageUrl}`}/>
+            <Card.Img variant="top" src={`${currentCar.imageUrl}`}/>
             <Card.Body>
-              <Card.Title>{car.brand} {car.model}</Card.Title>
-              <Card.Text>License Plate: {car.licensePlate}</Card.Text>
+              <Card.Title>{currentCar.brand} {currentCar.model}</Card.Title>
+              <Card.Text>License Plate: {currentCar.licensePlate}</Card.Text>
               <Row>
                 <Col>
-                  <Button style={{width: "12vw"}} variant="danger"><Link className='text-light' style={{textDecoration: "none"}} to={`/home/cars/${car._id}/edit`}>Edit Car Info</Link></Button>
+                  <Button style={{width: "12vw"}} variant="danger"><Link className='text-light' style={{textDecoration: "none"}} to={`/home/cars/${currentCar._id}/edit`}>Edit Car Info</Link></Button>
                 </Col>
                 <Col>
                   <Button style={{width: "12vw"}} variant="danger" onClick={handleShow}>See Services List</Button>
                 </Col>
                 <Col>
-                  <Button style={{width: "12vw"}} variant="outline-danger" onClick={() => {deleteCar(car._id)}}>Delete Car</Button>
+                  <Button style={{width: "12vw"}} variant="outline-danger" onClick={() => {deleteCar(currentCar._id)}}>Delete Car</Button>
                 </Col>
               </Row>
             </Card.Body>
@@ -72,9 +55,9 @@ const deleteCar = (carId) => {
             </Modal.Header>
             <Modal.Body>
             <ListGroup>
-              {car.services ? car.services.map(service => {
+              {currentCar.services ? currentCar.services.map(service => {
                 return(
-                    <ListGroup.Item action href={`/home/cars/${car._id}/${service._id}`}>
+                    <ListGroup.Item action href={`/home/cars/${currentCar._id}/${service._id}`}>
                       <p>Service Date: {service.serviceDate.substr(0, service.serviceDate.indexOf('T'))}</p>
                       <p>Service Details: {service.serviceDetails.length > 60 ? service.serviceDetails.slice(0, 60) + "..." : service.serviceDetails}</p>
                       <p>Service Status: {service.serviceStatus}</p>
@@ -86,6 +69,21 @@ const deleteCar = (carId) => {
           </Modal>
     </Container> : <h1>Loading Car Information</h1>
   )
+}
+
+const deleteCar = (carId) => {
+  axios.delete(`${process.env.REACT_APP_API_URL}/cars/${carId}`, {
+    headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }
+  })
+  .then(() => {
+    getCarList();
+    navigate('/home/cars')
+  })
+  .catch(error => console.log('There was an error removing the car from the database.', error))
+}
+
+
+  return renderCarDetails();
 }
 
 export default CarDetailsComponent

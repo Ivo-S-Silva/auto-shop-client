@@ -72,7 +72,7 @@ function CarListPage() {
         {cars ? renderCarList() : <h2 className='mt-5'>There are no cars currently registered.</h2>}
       </Col>
       <Col className='col-6'>
-        {currentCar ? <Outlet context={[cars, getCarList]}/> : <h2 className="mt-5">Select a car to see detailed information.</h2> }
+        {currentCar ? <Outlet context={[cars, getCarList, currentCar]}/> : <h2 className="mt-5">Select a car to see detailed information.</h2> }
       </Col>
     </Row>
     </>
