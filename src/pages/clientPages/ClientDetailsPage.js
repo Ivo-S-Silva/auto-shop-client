@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Row, Table } from "react-bootstrap";
+import { Button, Col, Row, Spinner, Table } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 
@@ -50,7 +50,7 @@ function ClientDetailsPage() {
     <Col className="col-8" style={{ backgroundColor: "#f2f2f2" }}>
     <>
       {!client ? (
-        <h1>Loading...</h1>
+        <Spinner animation="border" variant="danger" />
       ) : (
         <>
         <Row className="mt-3">

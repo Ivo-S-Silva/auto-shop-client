@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Button, Col, Form, Row, Spinner } from 'react-bootstrap'
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 
@@ -9,6 +9,7 @@ function AddClientPage(props) {
   const [name, setName] = useState('');
   const [fiscalNumber, setFiscalNumber] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [status, setStatus] = useState('idle');
   const [clients, fetchClientList] = useOutletContext();
   const { user } = useContext(AuthContext);
   
@@ -17,6 +18,7 @@ function AddClientPage(props) {
   
   const handleSubmit = (e) => {
    e.preventDefault();
+   setStatus('loading')
 
     const newClient = {
       name,
@@ -31,6 +33,7 @@ function AddClientPage(props) {
         fetchClientList();
         setName('');
         setFiscalNumber(null);
+        setStatus('idle')
         navigate(`/home/clients`);
       })
       .catch(error => {
@@ -74,7 +77,7 @@ function AddClientPage(props) {
 
           <Button className='mb-3' variant="danger" type="submit">
             Submit
-          </Button>
+          </Button> {status === 'loading' && <Spinner animation="border" variant="danger" />}
         </Form>
       </Col>
       <Col className="col-3"></Col>

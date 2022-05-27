@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Button, Col, Form, Row, Spinner } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 
@@ -9,6 +9,7 @@ function AddServicePage() {
 
   const [serviceDate, setServiceDate] = useState('');
   const [serviceDetails, setServiceDetails] = useState('');
+  const [status, setStatus] = useState('idle');
 
   const { user } = useContext(AuthContext);
 
@@ -16,6 +17,7 @@ function AddServicePage() {
   
   const handleSubmit = (e) => {
    e.preventDefault();
+   setStatus('loading')
 
     const newService = {
       serviceDate,
@@ -29,6 +31,7 @@ function AddServicePage() {
       .then(() => {
         setServiceDate('');
         setServiceDetails('');
+        setStatus('idle')
         navigate(`/home/cars/${carId}`);
       })
       .catch(error => {
@@ -73,7 +76,7 @@ function AddServicePage() {
 
         <Button className='mb-3' variant="danger" type="submit">
           Submit
-        </Button>
+        </Button> {status === 'loading' && <Spinner animation="border" variant="danger" />}
       </Form>
     </Col>
     <Col className='col-3'></Col>

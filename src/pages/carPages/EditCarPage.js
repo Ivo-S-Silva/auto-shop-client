@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
-import { Alert, Button, Form } from 'react-bootstrap';
+import { Alert, Button, Form, Spinner } from 'react-bootstrap';
 import { useNavigate, useOutletContext, useParams} from 'react-router-dom'
 import { AuthContext } from '../../context/auth.context';
 
@@ -13,6 +13,7 @@ function EditCarPage() {
     const [image, setImage] = useState(null);
     const [currentImage, setCurrentImage] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [status, setStatus] = useState('idle');
 
     const storedToken = localStorage.getItem('authToken');
     const { user } = useContext(AuthContext);
@@ -53,6 +54,7 @@ async function defineImage() {
 
     const handleSubmit = (e) => {
       e.preventDefault();
+      setStatus('loading');
 
     defineImage()
       .then(response => {
@@ -66,9 +68,10 @@ async function defineImage() {
         return axios.put(`${process.env.REACT_APP_API_URL}/cars/${carId}`, newCarDetails, {headers: { Authorization: `Bearer ${storedToken}`, CurrentUserId: user._id }})
       })  
         .then((response) => {
-          getCarList()
-          setCurrentCar(response.data)
-          navigate(`/home/cars/${response.data._id}`)
+          getCarList();
+          setCurrentCar(response.data);
+          setStatus('idle');
+          navigate(`/home/cars/${response.data._id}`);
           })
           .catch(error => {
             const errorDescription = error.response.data.message;
@@ -102,7 +105,7 @@ async function defineImage() {
 
   <Button variant="danger" type="submit">
     Submit
-  </Button>
+  </Button> {status === 'loading' && <Spinner animation="border" variant="danger" />}
 </Form>
   )
 }

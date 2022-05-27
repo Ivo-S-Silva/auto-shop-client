@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 
@@ -10,6 +10,7 @@ function EditServicePage() {
   const [serviceDate, setServiceDate] = useState('');
   const [serviceDetails, setServiceDetails] = useState('');
   const [serviceStatus, setServiceStatus] = useState('');
+  const [status, setStatus] = useState('idle');
 
   const { user } = useContext(AuthContext);
   const storedToken = localStorage.getItem('authToken');
@@ -31,6 +32,7 @@ function EditServicePage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setStatus('loading')
  
      const newServiceDetails = {
        serviceDate,
@@ -43,6 +45,7 @@ function EditServicePage() {
         setServiceDate('');
         setServiceDetails('');
         setServiceStatus('');
+        setStatus('idle');
         navigate(`/home/cars/${carId}/${serviceId}`)
       })
       .catch(error => {
@@ -95,7 +98,7 @@ function EditServicePage() {
 
         <Button className='mb-3' variant="danger" type="submit">
           Submit
-        </Button>
+        </Button> {status === 'loading' && <Spinner animation="border" variant="danger" />}
       </Form>
     </Col>
     <Col className='col-3'></Col>

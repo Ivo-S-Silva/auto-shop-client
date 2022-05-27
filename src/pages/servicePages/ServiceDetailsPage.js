@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Tab } from "bootstrap";
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Card, Col, Row, Tabs } from "react-bootstrap";
+import { Button, Card, Col, Row, Spinner, Tabs } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 
@@ -65,7 +65,7 @@ const deleteService = () => {
         <Tab eventKey="service" title="Service Details" >
           
         {!service ? (
-            <h1>Loading service Information</h1>
+          <Spinner animation="border" variant="danger" />
           ) : (
             <Card className="mt-5">
             <div className="mt-4 d-flex justify-content-center ">

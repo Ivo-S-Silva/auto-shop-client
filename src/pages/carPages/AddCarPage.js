@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { Alert, Button, Col, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import carPlaceholder from "../../assets/images/car-placeholder.jpeg";
@@ -13,6 +13,7 @@ function AddCarPage() {
   const [licensePlate, setLicensePlate] = useState("");
   const [image, setImage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [status, setStatus] = useState('idle');
 
   const [clients, fetchClientList] = useOutletContext();
   const { user } = useContext(AuthContext);
@@ -44,6 +45,7 @@ function AddCarPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setStatus('loading');
 
     const storedToken = localStorage.getItem("authToken");
 
@@ -72,6 +74,7 @@ function AddCarPage() {
         setModel("");
         setLicensePlate("");
         fetchClientList();
+        setStatus('idle');
         navigate(`/home/clients/${clientId}`);
       })
       .catch((error) => {
@@ -147,7 +150,7 @@ function AddCarPage() {
 
           <Button className="mb-3" variant="danger" type="submit">
             Submit
-          </Button>
+          </Button> {status === 'loading' && <Spinner animation="border" variant="danger" />}
         </Form>
       </Col>
       <Col className="col-3"></Col>

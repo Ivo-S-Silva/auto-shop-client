@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 
@@ -14,11 +14,13 @@ function EditClientPage(props) {
   const [name, setName] = useState(clientDetails.name);
   const [fiscalNumber, setFiscalNumber] = useState(clientDetails.fiscalNumber);
   const [errorMessage, setErrorMessage] = useState("");
+  const [status, setStatus] = useState('idle');
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setStatus('loading')
 
     const newClientDetails = {
       name,
@@ -39,6 +41,7 @@ function EditClientPage(props) {
         }
       )
       .then((response) => {
+        setStatus('idle')
         navigate(`/home/clients/${clientId}`);
       })
       .catch((error) => {
@@ -85,7 +88,7 @@ function EditClientPage(props) {
 
           <Button className='mb-4' variant="danger" type="submit">
             Submit
-          </Button>
+          </Button> {status === 'loading' && <Spinner animation="border" variant="danger" />}
         </Form>
       </Col>
       <Col className="col-3"></Col>

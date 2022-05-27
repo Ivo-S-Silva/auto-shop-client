@@ -2,12 +2,13 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
-import { Col, Container, Form, Row, Button, Alert } from "react-bootstrap";
+import { Col, Container, Form, Row, Button, Alert, Spinner } from "react-bootstrap";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [status, setStatus] = useState('idle');
 
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
@@ -15,6 +16,7 @@ function LoginPage() {
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
+    setStatus('loading');
     
     const requestBody = { email, password };
 
@@ -23,6 +25,7 @@ function LoginPage() {
       .then((response) => {
         storeToken(response.data.authToken)
         authenticateUser()
+        setStatus('idle')
         navigate('/home')
       })
       .catch((error) => {
@@ -51,7 +54,7 @@ function LoginPage() {
               <Form.Label>Password</Form.Label>
               <Form.Control style={{ width: "20vw"}} type="password" name="password" value={password} required={true} onChange={e => setPassword(e.target.value)} placeholder="Password" />
             </Form.Group>
-            <Button variant="danger" type="submit">Submit</Button>
+            <Button variant="danger" type="submit">Submit</Button> {status === 'loading' && <Spinner animation="border" variant="danger" />}
             <p className="mt-4">Need an account? <Link to={"/signup"}>Sign Up</Link></p>
           </Form>
 

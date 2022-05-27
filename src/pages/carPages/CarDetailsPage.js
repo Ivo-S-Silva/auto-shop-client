@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Col, Container, ListGroup, Modal, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, ListGroup, Modal, Row, Spinner } from 'react-bootstrap';
 import { Link,  useOutletContext, useParams } from 'react-router-dom';
 
 function CarDetailsPage() {
@@ -65,7 +65,7 @@ const renderCarDetails = (car) => {
             </ListGroup>
             </Modal.Body>
           </Modal>
-    </Container> : <h1>Loading Car Information</h1>
+    </Container> : <Spinner animation="border" variant="danger" />
   )
 }
 

@@ -1,22 +1,27 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Alert, Col, Container, Form, Row, Button } from 'react-bootstrap';
+import { Alert, Col, Container, Form, Row, Button, Spinner } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
 function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [status, setStatus] = useState('idle');
 
     const navigate = useNavigate();
 
 const handleSignupSubmit = (e) => {
     e.preventDefault();
+    setStatus('loading');
 
     const requestBody = {email, password};
 
     axios.post(`${process.env.REACT_APP_API_URL}/auth/signup`, requestBody)
-        .then(response => navigate('/login'))
+        .then(response => {
+          setStatus('idle')
+          navigate('/login')
+        })
         .catch((error) => {
             const errorDescription = error.response.data.message;
             console.log("Error creating account", errorDescription)
@@ -46,7 +51,7 @@ const handleSignupSubmit = (e) => {
               <Form.Label>Password</Form.Label>
               <Form.Control style={{ width: "20vw"}} type="password" name="password" value={password} required={true} onChange={e => setPassword(e.target.value)} placeholder="Password" />
             </Form.Group>
-            <Button variant="danger" type="submit">Submit</Button>
+            <Button variant="danger" type="submit">Submit</Button> {status === 'loading' && <Spinner animation="border" variant="danger" />}
             <p className="mt-4">Already have an account? <Link to={"/login"}>Login</Link></p>
           </Form>
 
