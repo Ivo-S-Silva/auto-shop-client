@@ -32,11 +32,11 @@ function LoginPage() {
       });
   };
 
-  return (
-    <Container fluid>
-    <video autoPlay muted loop id="backgroundVideo" style={{position: "fixed", right: 0, bottom: 0, maxWidth: "100%", maxHeight: "100%", zIndex: -1}}>
+  return (<>
+    <video autoPlay muted loop id="backgroundVideo" style={{position: "fixed", right: 0, bottom: 0, width: "100vw", height: "100vh", zIndex: -1, objectFit:"cover"}}>
       <source src="https://res.cloudinary.com/dq8uzmgrq/video/upload/v1653586496/production_ID_4482068_1_gxtjbn.mp4" type="video/mp4"></source>
     </video>
+    <Container>
       <Row className="align-items-center col-12" style={{ height: "90vh" }}>
         <Col className="d-flex justify-content-center align-items-center col-6" style={{ minHeight: "55vh", maxHeight: "auto"}}>
           <Form onSubmit={handleLoginSubmit} className="d-flex flex-column justify-content-center align-items-center" style={{ width: "35vw", minHeight: "55vh", maxHeight: "auto", backgroundColor: "#f2f2f2", borderRadius: "25px"}}>
@@ -60,6 +60,7 @@ function LoginPage() {
         </Col>
       </Row>
     </Container>
+  </>
   );
 }
 
